@@ -665,6 +665,26 @@ The result is a cube application in which resolution, verification, and learning
 
 ---
 
+# 🌍 **Potential Beyond the Cube**
+
+Structural Cube demonstrates a reusable structural pattern:
+
+`current state -> visible obligations -> admitted action -> exact replay -> verified progress -> evidence`
+
+This pattern may inform future work in:
+
+- robotics and controlled movement;
+- manufacturing and assembly;
+- software workflows and recovery;
+- infrastructure inspection and repair;
+- AI planning and tool execution;
+- education, training, and other puzzles;
+- auditable decision and settlement systems.
+
+These are **potential application directions**, not validated deployments of Structural Cube v1.0.2.
+
+---
+
 # 🌌 **Final Insight**
 
 A cube can move in many legal ways.

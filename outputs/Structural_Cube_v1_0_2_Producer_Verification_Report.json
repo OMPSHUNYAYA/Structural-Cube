@@ -1,0 +1,18 @@
+{
+  "profile": "SCCERT-ECONOMY-AUDIT-1-D01-EXP-A",
+  "version": "1.0.2",
+  "status": "PASS",
+  "certificate_count": 100,
+  "passed_certificate_count": 100,
+  "failed_certificate_count": 0,
+  "source_manifest_hash": "9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd",
+  "realization_catalog_root": "e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4",
+  "realization_catalog_entries": 2292,
+  "aggregate_root": "d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472",
+  "bundle_root": "c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7",
+  "browser_bundle_verification": "PASS",
+  "tamper_rejection": "PASS",
+  "expected_root_match": "PASS",
+  "elapsed_ms": 52108,
+  "wall_clock_authority": "NONE"
+}

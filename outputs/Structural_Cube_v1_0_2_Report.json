@@ -1,0 +1,67 @@
+{
+  "profile": "SC-V1-0-2-REPORT-1-D01",
+  "version_id": "STRUCTURAL-CUBE-V1-0-2",
+  "version": "1.0.2",
+  "status": "PASS",
+  "acceptance_class": "STRUCTURAL_CUBE_V1_0_2_PASS",
+  "interactive_authority": "GRAPH_GOVERNED_ECONOMY_PRIMARY_AUTHORITY",
+  "version_manifest_root": "74a6b3f92de7fe8e9d42ea5ee05ba7e54908ff2cdcbfcec31c3312f6d8e64ea2",
+  "source_manifest_hash": "9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd",
+  "certificate_profile": "SCCERT-1-D02-EXP-A",
+  "certificate_count": 100,
+  "producer_verification": {
+    "profile": "SCCERT-ECONOMY-AUDIT-1-D01-EXP-A",
+    "version": "1.0.2",
+    "status": "PASS",
+    "certificate_count": 100,
+    "passed_certificate_count": 100,
+    "failed_certificate_count": 0,
+    "source_manifest_hash": "9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd",
+    "realization_catalog_root": "e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4",
+    "realization_catalog_entries": 2292,
+    "aggregate_root": "d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472",
+    "bundle_root": "c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7",
+    "browser_bundle_verification": "PASS",
+    "tamper_rejection": "PASS",
+    "expected_root_match": "PASS",
+    "elapsed_ms": 52108,
+    "wall_clock_authority": "NONE"
+  },
+  "independent_verification": {
+    "profile": "SCCERT-ECONOMY-AUDIT-1-D01-EXP-A",
+    "status": "PASS",
+    "failure_count": 0,
+    "certificate_count": 100,
+    "passed_certificate_count": 100,
+    "failed_certificate_count": 0,
+    "realization_catalog_root": "e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4",
+    "aggregate_root": "d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472",
+    "bundle_root": "c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7"
+  },
+  "artifact_hashes": {
+    "Structural_Cube_v1_0_2.html": "f039ae4f14ac041b14bf04e79bf0a4d476bdcf86ab9fcb0c8d3c5fb1ae81e1ab",
+    "Structural_Cube_v1_0_2_Certificate_Bundle.json": "6dcc9788760f4e4d809016d86c8257854dc2f8fd5454fb6dcfb193f5a69e1895",
+    "Structural_Cube_v1_0_2_Certificate_Manifest.txt": "d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472",
+    "Structural_Cube_v1_0_2_Producer_Verification_Report.json": "81e7ed5ec93d44d002d3c765fc5259d45d4a300e8e13825e3c5eb48dc4290e75",
+    "Structural_Cube_v1_0_2_Verifier.py": "f7ff56500fd3eae8ea2df0da8b6cdc9b16cc5c958298b60e580321f0f43517a3",
+    "Structural_Cube_v1_0_2_Independent_Verification_Report.json": "c39468d4e133855deddbc20067f811a20a6cb9ae4c909e7ee405662129a67472"
+  },
+  "authority": {
+    "route_authority": "REFERENCE_FREE_STRUCTURAL_KERNEL_AUTHORITY",
+    "graph_authority": "FULL_GRAPH",
+    "economy_policy": "TOP_4_GRAPH_POOL_DEPTH_4",
+    "reference_route_access": "NONE",
+    "current_state_reference_distance_access": "NONE",
+    "fallback_activation": "NONE",
+    "compiler_search_input": "ISOLATED_PURE_KERNEL_EFFECT_ONLY",
+    "wall_clock_authority": "NONE"
+  },
+  "claim_boundary": {
+    "version_class": "EXPERIMENTAL",
+    "corpus_scope": "COMMITTED_P100",
+    "shortest_route_optimality": "NOT_CLAIMED",
+    "competition_speed": "NOT_CLAIMED",
+    "universal_totality": "NOT_CLAIMED"
+  },
+  "version_report_root": "eb911576bbfbb7dd8ce6f9293ba81f361bce112f30450ead9d7c69ea0fc69225"
+}

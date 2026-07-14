@@ -1392,27 +1392,27 @@ Answered by rank and graph construction.
 
 Answered by the five pure-kernel target families.
 
-## **Question 4 — Which admitted action should be selected?**
+### **Question 4 — Which admitted action should be selected?**
 
 Answered by graph-governed economy comparison.
 
-## **Question 5 — How is the action realized?**
+### **Question 5 — How is the action realized?**
 
 Answered by the isolated pure-effect compiler.
 
-## **Question 6 — Did the action do exactly what it declared?**
+### **Question 6 — Did the action do exactly what it declared?**
 
 Answered by exact replay and target-state comparison.
 
-## **Question 7 — Did the structure progress?**
+### **Question 7 — Did the structure progress?**
 
 Answered by strict `W` descent.
 
-## **Question 8 — How is the action explained?**
+### **Question 8 — How is the action explained?**
 
 Answered by Strategy, Plan, and Move derived from checked evidence.
 
-## **Question 9 — Can another implementation verify the result?**
+### **Question 9 — Can another implementation verify the result?**
 
 Answered by SCCERT and the independent Python verifier.
 

@@ -1380,15 +1380,15 @@ Technical specifications:
 
 The architecture answers nine questions.
 
-## **Question 1 — What is the current cube state?**
+### **Question 1 — What is the current cube state?**
 
 Answered by canonical state extraction and legality validation.
 
-## **Question 2 — What structural residue remains?**
+### **Question 2 — What structural residue remains?**
 
 Answered by rank and graph construction.
 
-## **Question 3 — Which exact structural actions are admissible?**
+### **Question 3 — Which exact structural actions are admissible?**
 
 Answered by the five pure-kernel target families.
 

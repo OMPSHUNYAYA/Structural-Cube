@@ -1,0 +1,479 @@
+name: Structural Cube Verification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: structural-cube-verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify v1.0.2 Evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Verify required files exist
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            "demo/Structural_Cube_v1_0_2.html"
+            "outputs/Structural_Cube_v1_0_2_Certificate_Bundle.json"
+            "outputs/Structural_Cube_v1_0_2_Certificate_Manifest.txt"
+            "outputs/Structural_Cube_v1_0_2_Independent_Verification_Report.json"
+            "outputs/Structural_Cube_v1_0_2_Manifest.txt"
+            "outputs/Structural_Cube_v1_0_2_Producer_Verification_Report.json"
+            "outputs/Structural_Cube_v1_0_2_Report.json"
+            "verify/SHA256SUMS.txt"
+            "verify/Structural_Cube_v1_0_2_Verifier.py"
+            "verify/VERIFY.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "ERROR: Missing required file: $file"
+              exit 1
+            fi
+          done
+
+          echo "All required Structural Cube files are present."
+
+      - name: Verify browser application checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum -c verify/SHA256SUMS.txt
+
+      - name: Verify frozen artifact hashes
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib
+          import sys
+          from pathlib import Path
+
+          expected_hashes = {
+              "demo/Structural_Cube_v1_0_2.html":
+                  "f039ae4f14ac041b14bf04e79bf0a4d476bdcf86ab9fcb0c8d3c5fb1ae81e1ab",
+
+              "outputs/Structural_Cube_v1_0_2_Certificate_Bundle.json":
+                  "6dcc9788760f4e4d809016d86c8257854dc2f8fd5454fb6dcfb193f5a69e1895",
+
+              "outputs/Structural_Cube_v1_0_2_Certificate_Manifest.txt":
+                  "d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472",
+
+              "outputs/Structural_Cube_v1_0_2_Independent_Verification_Report.json":
+                  "c39468d4e133855deddbc20067f811a20a6cb9ae4c909e7ee405662129a67472",
+
+              "outputs/Structural_Cube_v1_0_2_Manifest.txt":
+                  "74a6b3f92de7fe8e9d42ea5ee05ba7e54908ff2cdcbfcec31c3312f6d8e64ea2",
+
+              "outputs/Structural_Cube_v1_0_2_Producer_Verification_Report.json":
+                  "81e7ed5ec93d44d002d3c765fc5259d45d4a300e8e13825e3c5eb48dc4290e75",
+
+              "outputs/Structural_Cube_v1_0_2_Report.json":
+                  "10af21b336753f020dd911f5e60c4d0f87c891b3aedd2a1d9afd1f6fda457221",
+
+              "verify/Structural_Cube_v1_0_2_Verifier.py":
+                  "f7ff56500fd3eae8ea2df0da8b6cdc9b16cc5c958298b60e580321f0f43517a3",
+          }
+
+          failures = []
+
+          for filename, expected in expected_hashes.items():
+              path = Path(filename)
+
+              if not path.is_file():
+                  failures.append(f"Missing file: {filename}")
+                  continue
+
+              actual = hashlib.sha256(path.read_bytes()).hexdigest()
+
+              if actual != expected:
+                  failures.append(
+                      f"Hash mismatch: {filename}\n"
+                      f"  Expected: {expected}\n"
+                      f"  Actual:   {actual}"
+                  )
+              else:
+                  print(f"PASS: {filename}")
+                  print(f"      {actual}")
+
+          if failures:
+              print("\nERROR: Frozen artifact verification failed:")
+              for failure in failures:
+                  print(failure)
+              sys.exit(1)
+
+          print("\nAll frozen artifact hashes verified.")
+          PY
+
+      - name: Validate version report
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          report_path = Path("outputs/Structural_Cube_v1_0_2_Report.json")
+          report = json.loads(report_path.read_text(encoding="utf-8"))
+
+          failures = []
+
+          def require(condition, message):
+              if not condition:
+                  failures.append(message)
+
+          require(
+              report.get("profile") == "SC-V1-0-2-REPORT-1-D01",
+              "Unexpected version-report profile.",
+          )
+
+          require(
+              report.get("version_id") == "STRUCTURAL-CUBE-V1-0-2",
+              "Unexpected version identifier.",
+          )
+
+          require(
+              report.get("version") == "1.0.2",
+              "Unexpected version number.",
+          )
+
+          require(
+              report.get("status") == "PASS",
+              "Version-report status is not PASS.",
+          )
+
+          require(
+              report.get("acceptance_class") ==
+              "STRUCTURAL_CUBE_V1_0_2_PASS",
+              "Unexpected acceptance class.",
+          )
+
+          require(
+              report.get("certificate_profile") == "SCCERT-1-D02-EXP-A",
+              "Unexpected certificate profile.",
+          )
+
+          require(
+              report.get("certificate_count") == 100,
+              "Version report does not declare 100 certificates.",
+          )
+
+          require(
+              report.get("version_manifest_root") ==
+              "74a6b3f92de7fe8e9d42ea5ee05ba7e54908ff2cdcbfcec31c3312f6d8e64ea2",
+              "Version manifest root mismatch.",
+          )
+
+          require(
+              report.get("source_manifest_hash") ==
+              "9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd",
+              "Source corpus manifest hash mismatch.",
+          )
+
+          require(
+              report.get("version_report_root") ==
+              "eb911576bbfbb7dd8ce6f9293ba81f361bce112f30450ead9d7c69ea0fc69225",
+              "Version report canonical root mismatch.",
+          )
+
+          producer = report.get("producer_verification", {})
+
+          require(
+              producer.get("status") == "PASS",
+              "Producer verification status is not PASS.",
+          )
+
+          require(
+              producer.get("certificate_count") == 100,
+              "Producer certificate count is not 100.",
+          )
+
+          require(
+              producer.get("passed_certificate_count") == 100,
+              "Producer passed-certificate count is not 100.",
+          )
+
+          require(
+              producer.get("failed_certificate_count") == 0,
+              "Producer failed-certificate count is not zero.",
+          )
+
+          require(
+              producer.get("browser_bundle_verification") == "PASS",
+              "Browser bundle verification is not PASS.",
+          )
+
+          require(
+              producer.get("tamper_rejection") == "PASS",
+              "Tamper rejection is not PASS.",
+          )
+
+          require(
+              producer.get("expected_root_match") == "PASS",
+              "Producer expected-root agreement is not PASS.",
+          )
+
+          independent = report.get("independent_verification", {})
+
+          require(
+              independent.get("status") == "PASS",
+              "Committed independent verification status is not PASS.",
+          )
+
+          require(
+              independent.get("failure_count") == 0,
+              "Committed independent verification contains failures.",
+          )
+
+          require(
+              independent.get("certificate_count") == 100,
+              "Committed independent certificate count is not 100.",
+          )
+
+          require(
+              independent.get("passed_certificate_count") == 100,
+              "Committed independent passed-certificate count is not 100.",
+          )
+
+          require(
+              independent.get("failed_certificate_count") == 0,
+              "Committed independent failed-certificate count is not zero.",
+          )
+
+          expected_artifact_hashes = {
+              "Structural_Cube_v1_0_2.html":
+                  "f039ae4f14ac041b14bf04e79bf0a4d476bdcf86ab9fcb0c8d3c5fb1ae81e1ab",
+
+              "Structural_Cube_v1_0_2_Certificate_Bundle.json":
+                  "6dcc9788760f4e4d809016d86c8257854dc2f8fd5454fb6dcfb193f5a69e1895",
+
+              "Structural_Cube_v1_0_2_Certificate_Manifest.txt":
+                  "d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472",
+
+              "Structural_Cube_v1_0_2_Producer_Verification_Report.json":
+                  "81e7ed5ec93d44d002d3c765fc5259d45d4a300e8e13825e3c5eb48dc4290e75",
+
+              "Structural_Cube_v1_0_2_Verifier.py":
+                  "f7ff56500fd3eae8ea2df0da8b6cdc9b16cc5c958298b60e580321f0f43517a3",
+
+              "Structural_Cube_v1_0_2_Independent_Verification_Report.json":
+                  "c39468d4e133855deddbc20067f811a20a6cb9ae4c909e7ee405662129a67472",
+          }
+
+          require(
+              report.get("artifact_hashes") == expected_artifact_hashes,
+              "Version-report artifact hash map differs from the frozen map.",
+          )
+
+          authority = report.get("authority", {})
+
+          expected_authority = {
+              "route_authority":
+                  "REFERENCE_FREE_STRUCTURAL_KERNEL_AUTHORITY",
+
+              "graph_authority":
+                  "FULL_GRAPH",
+
+              "economy_policy":
+                  "TOP_4_GRAPH_POOL_DEPTH_4",
+
+              "reference_route_access":
+                  "NONE",
+
+              "current_state_reference_distance_access":
+                  "NONE",
+
+              "fallback_activation":
+                  "NONE",
+
+              "compiler_search_input":
+                  "ISOLATED_PURE_KERNEL_EFFECT_ONLY",
+
+              "wall_clock_authority":
+                  "NONE",
+          }
+
+          require(
+              authority == expected_authority,
+              "Version-report authority declaration differs from the expected declaration.",
+          )
+
+          claim_boundary = report.get("claim_boundary", {})
+
+          require(
+              claim_boundary.get("version_class") == "EXPERIMENTAL",
+              "Unexpected version class.",
+          )
+
+          require(
+              claim_boundary.get("corpus_scope") == "COMMITTED_P100",
+              "Unexpected corpus scope.",
+          )
+
+          require(
+              claim_boundary.get("shortest_route_optimality") ==
+              "NOT_CLAIMED",
+              "Shortest-route claim boundary changed.",
+          )
+
+          require(
+              claim_boundary.get("universal_totality") ==
+              "NOT_CLAIMED",
+              "Universal-totality claim boundary changed.",
+          )
+
+          if failures:
+              print("ERROR: Version report validation failed:")
+              for failure in failures:
+                  print("-", failure)
+              sys.exit(1)
+
+          print("Version report validated.")
+          PY
+
+      - name: Run independent Structural Cube verifier
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python verify/Structural_Cube_v1_0_2_Verifier.py \
+            outputs/Structural_Cube_v1_0_2_Certificate_Bundle.json \
+            --json-report structural_cube_ci_report.json \
+            | tee structural_cube_ci_stdout.txt
+
+      - name: Validate independent verification result
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          generated_path = Path("structural_cube_ci_report.json")
+          committed_path = Path(
+              "outputs/Structural_Cube_v1_0_2_Independent_Verification_Report.json"
+          )
+
+          if not generated_path.is_file():
+              print("ERROR: The verifier did not create the CI report.")
+              sys.exit(1)
+
+          generated = json.loads(generated_path.read_text(encoding="utf-8"))
+          committed = json.loads(committed_path.read_text(encoding="utf-8"))
+
+          failures = []
+
+          def require(condition, message):
+              if not condition:
+                  failures.append(message)
+
+          require(
+              generated.get("status") == "PASS",
+              "Generated verification status is not PASS.",
+          )
+
+          require(
+              generated.get("failure_count") == 0,
+              "Generated verification contains failures.",
+          )
+
+          require(
+              generated.get("certificate_count") == 100,
+              "Generated certificate count is not 100.",
+          )
+
+          require(
+              generated.get("passed_certificate_count") == 100,
+              "Generated passed-certificate count is not 100.",
+          )
+
+          require(
+              generated.get("failed_certificate_count") == 0,
+              "Generated failed-certificate count is not zero.",
+          )
+
+          require(
+              generated.get("aggregate_root") ==
+              "d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472",
+              "Generated certificate aggregate root mismatch.",
+          )
+
+          require(
+              generated.get("bundle_root") ==
+              "c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7",
+              "Generated certificate bundle root mismatch.",
+          )
+
+          require(
+              generated.get("realization_catalog_root") ==
+              "e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4",
+              "Generated realization catalogue root mismatch.",
+          )
+
+          certificates = generated.get("certificates", [])
+
+          require(
+              len(certificates) == 100,
+              "Generated report does not contain 100 certificate records.",
+          )
+
+          require(
+              [item.get("seed") for item in certificates] ==
+              list(range(1, 101)),
+              "Generated certificate seed order is not 1 through 100.",
+          )
+
+          require(
+              all(item.get("status") == "PASS" for item in certificates),
+              "One or more generated certificate records are not PASS.",
+          )
+
+          require(
+              all(item.get("failure_count") == 0 for item in certificates),
+              "One or more generated certificate records contain failures.",
+          )
+
+          require(
+              generated == committed,
+              "Generated report differs logically from the committed independent report.",
+          )
+
+          if failures:
+              print("ERROR: Independent result validation failed:")
+              for failure in failures:
+                  print("-", failure)
+              sys.exit(1)
+
+          print("Independent verification result validated.")
+          print("100/100 certificates passed.")
+          print("Generated report matches the committed report.")
+          PY
+
+      - name: Upload verification output on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: structural-cube-verification-debug
+          path: |
+            structural_cube_ci_report.json
+            structural_cube_ci_stdout.txt
+          if-no-files-found: ignore

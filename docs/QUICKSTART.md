@@ -367,9 +367,9 @@ Expected entry:
 f039ae4f14ac041b14bf04e79bf0a4d476bdcf86ab9fcb0c8d3c5fb1ae81e1ab  demo/Structural_Cube_v1_0_2.html
 ```
 
-## **Windows**
+Run all commands below from the repository root so that the relative `demo/` and `verify/` paths resolve correctly.
 
-From the repository root:
+## **Windows**
 
 ```bat
 certutil -hashfile "demo\Structural_Cube_v1_0_2.html" SHA256
@@ -429,6 +429,8 @@ passed_certificate_count = 100
 failed_certificate_count = 0
 ```
 
+Expected exit code: `0`.
+
 Expected execution time is approximately one minute on a typical current desktop or laptop.
 
 Runtime depends on:
@@ -481,7 +483,7 @@ and the graph-aware economy certificate bundle.
 
 | Identity | SHA-256 |
 |---|---|
-| Source corpus manifest | `9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd` |
+| Source corpus manifest hash | `9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd` |
 | Realization catalogue root | `e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4` |
 | Certificate aggregate root | `d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472` |
 | Certificate bundle root | `c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7` |
@@ -495,6 +497,8 @@ Distinguish:
 ---
 
 # **15. P100 Result Summary**
+
+Route-economy results compare the graph-aware economy selector against the declared earlier full-graph selector, whose committed P100 mean was `193.99` moves. The comparison boundary is documented in the [Corpus, Telemetry, and Resolver Improvement Specification](specifications/Structural_Cube_Corpus_Telemetry_and_Resolver_Improvement_Specification_v1_0_2.txt).
 
 The committed P100 evidence reports:
 
@@ -511,7 +515,7 @@ The committed P100 evidence reports:
 | Browser certificate verification | **100/100 PASS** |
 | Independent Python verification | **100/100 PASS** |
 | Tamper rejection | **PASS** |
-| Seeds improved against the earlier full-graph route | **100** |
+| Seeds improved against the declared earlier full-graph selector | **100** |
 | Equal seeds | **0** |
 | Regressed seeds | **0** |
 | Mean moves | **174.58** |
@@ -768,7 +772,7 @@ Structural Cube v1.0.2 establishes, for the committed P100 corpus:
 - zero current-state reference-route access;
 - zero current-state reference-distance access;
 - zero fallback activation;
-- lower route move count on all 100 tested seeds relative to the declared earlier route;
+- lower route move count on all 100 tested seeds relative to the declared earlier full-graph selector;
 - portable certificate generation;
 - browser certificate verification;
 - independent Python verification;

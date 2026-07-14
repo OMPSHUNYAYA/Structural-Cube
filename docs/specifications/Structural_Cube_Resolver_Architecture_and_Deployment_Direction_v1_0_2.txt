@@ -1,0 +1,1124 @@
+STRUCTURAL CUBE
+
+Resolver Architecture, Structural Learning, Dependency Elimination, and Deployment Direction
+
+Document version:
+v1.0.2
+
+Implementation family:
+Structural Cube v1.0.2
+Structural Cube Core v0.1.0
+Graph-governed economy primary authority
+SCCERT-1-D02-EXP-A portable route certificates
+
+Conformance and evidence families:
+SCGS-1-D02 Canonical Graph Serialization
+SCRANK-1-D01-EXP-A Structural Rank
+SC-KERNEL-1-D01-EXP-A Pure-Kernel Contracts
+SC-KERNEL-COMPILER-1-D01-EXP-A Constructive Kernel Compiler
+SC-GRAPH-AUTHORITY-1-D01-EXP-A
+SC-GRAPH-ECONOMY-POLICY-1-D01-EXP-A
+SC-GRAPH-ECONOMY-ROUTE-1-D01-EXP-A
+SC-GRAPH-ECONOMY-P100-1-D01-EXP-A
+SCCERT-ECONOMY-CORPUS-1-D01-EXP-A
+
+Version date:
+July 2026
+
+
+1 Executive Summary
+
+Structural Cube is a browser-based 3 x 3 x 3 cube system that resolves the current legal state through explicit structure, deterministic verification, graph-governed target selection, strict structural-rank descent, and portable evidence.
+
+The current primary route is:
+
+`current state -> canonical cubie state -> observed graph -> admitted pure-kernel targets -> graph ranking -> economy lookahead -> exact compiled action -> strict W descent -> rebuild -> solved state`
+
+The primary interactive authority is:
+
+`GRAPH_GOVERNED_ECONOMY_PRIMARY_AUTHORITY`
+
+Auto Resolve and With Hint use this authority.
+
+The resolver does not read a current-state reference solution or current-state reference distance.
+
+`reference_route_access = NONE`
+
+`current_state_reference_distance_access = NONE`
+
+`fallback_activation = NONE`
+
+The state convention is:
+
+`C = (P_e, O_e, P_c, O_c)`
+
+Legal states satisfy:
+
+`sum(O_e) mod 2 = 0`
+
+`sum(O_c) mod 3 = 0`
+
+`parity(P_e) = parity(P_c)`
+
+The structural potential is:
+
+`Phi(C) = (rho, D_e + D_c, tau_e + tau_c, F, T)`
+
+The integer rank is:
+
+`W(C) = 24*rho + 4*(D_e + D_c) + tau_e + tau_c + F + T`
+
+For every legal state:
+
+`0 <= W(C) <= 126`
+
+and:
+
+`W(C) = 0 iff C = SOLVED`
+
+Every admitted action must satisfy:
+
+`W(C_(i+1)) < W(C_i)`
+
+The graph-governed economy policy is:
+
+`full graph ranking -> top 4 admitted targets -> depth 4 structural lookahead -> lowest compiled face-turn cost`
+
+The cost signal is computed only from exact realizations of isolated pure-kernel effects. It is not obtained from a solution route for the current cube.
+
+The committed 100-seed corpus records:
+
+- 100 of 100 solved routes;
+- strict W descent on every action boundary;
+- final W equal to zero for every route;
+- zero fallback activation;
+- no current-state reference-route access;
+- no current-state reference-distance access;
+- deterministic repeatability;
+- 100 of 100 routes shorter than the earlier full-graph selector;
+- zero route regressions.
+
+The measured route distribution is:
+
+`mean moves = 174.58`
+
+`median moves = 172`
+
+`p95 moves = 207`
+
+`maximum moves = 223`
+
+The comparison saved:
+
+`1,941 moves across 100 routes`
+
+The portable certificate corpus contains:
+
+`certificate_count = 100`
+
+`passed_certificate_count = 100`
+
+`failed_certificate_count = 0`
+
+The browser producer and the independent Python verifier agree on:
+
+`realization_catalog_root = e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4`
+
+`certificate_aggregate_root = d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472`
+
+`certificate_bundle_root = c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7`
+
+The version evidence records:
+
+`version_manifest_root = 74a6b3f92de7fe8e9d42ea5ee05ba7e54908ff2cdcbfcec31c3312f6d8e64ea2`
+
+`version_report_root = eb911576bbfbb7dd8ce6f9293ba81f361bce112f30450ead9d7c69ea0fc69225`
+
+The current evidence supports deterministic reference-free structural resolution on the committed P100 corpus with portable certificate verification.
+
+It does not claim:
+
+- shortest-route optimality;
+- competition-speed superiority;
+- universal totality over every legal state;
+- learner-outcome effectiveness without study;
+- uniqueness of the observed graph as the complete mathematical dependency graph of the cube.
+
+
+2 Purpose
+
+This document defines the current Structural Cube architecture and its deployment direction.
+
+It serves to:
+
+- identify the primary authority;
+- define the legal state model;
+- define the structural rank and pure-kernel actions;
+- define graph-governed selection;
+- define the economy policy;
+- define interactive learning behaviour;
+- define portable evidence;
+- define independent verification;
+- distinguish measured evidence from broader claims;
+- describe the maintained distribution package;
+- provide a disciplined path for later versions.
+
+The governing architectural law is:
+
+`structure proposes -> verification admits or refuses -> economy chooses among admitted targets -> exact action executes -> evidence commits`
+
+The learning law is:
+
+`verified structural purpose -> Strategy -> Plan -> Move`
+
+The anti-disguise law is:
+
+`structural explanation must come from the structure that governed action selection`
+
+
+3 Project Identity
+
+Project name:
+
+Structural Cube
+
+Technical system name:
+
+Structural Cube Resolution Engine
+
+The interface displays:
+
+`Structural Cube`
+
+The system identity is:
+
+`turn freely -> read the current structure -> choose an admitted action -> verify exact progress -> rebuild -> close the cube`
+
+The learning identity is:
+
+`understand the goal -> understand the plan -> make the move`
+
+The route-evidence identity is:
+
+`same canonical state + same declared profiles + same deterministic rules -> same structural route evidence`
+
+The certificate identity is:
+
+`same committed source record + same artifacts + same declared profiles -> same certificate`
+
+Structural Cube does not reject established cube mathematics.
+
+It uses legal cube transformations and established cubie structure while changing the authority relation.
+
+A conventional system may begin with a known phase, case, or route.
+
+Structural Cube begins with:
+
+`what is unresolved now?`
+
+`what depends on what?`
+
+`which pure structural action can reduce the declared rank?`
+
+`which admitted action has the lowest declared compiled cost under the graph policy?`
+
+
+4 Anti-Disguise Discipline
+
+A structural resolver must not follow this order:
+
+`current cube -> conventional solution route -> structural labels`
+
+The required order is:
+
+`current cube -> structural state -> graph -> pure-kernel candidates -> verification -> selection -> route -> lesson`
+
+For every certified action, the evidence must establish:
+
+`candidate_origin = STRUCTURAL`
+
+`target_contract_present = true`
+
+`exact_effect_verified = true`
+
+`strict_W_descent = true`
+
+`graph_policy_applied = true`
+
+`reference_route_access = NONE`
+
+`current_state_reference_distance_access = NONE`
+
+`fallback_activation = NONE`
+
+`lesson_claims_derived_from_action_evidence = true`
+
+A correct move without this evidence may still be legal, but it is not a certified structural action.
+
+
+5 Canonical State and Legality
+
+The canonical cube state uses 54 facelets in this order:
+
+`U, R, F, D, L, B`
+
+Each face is read row by row, left to right, top to bottom.
+
+The canonical solved state is:
+
+`UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Cubie arrays use:
+
+`perm[position] = piece identity occupying that position`
+
+`ori[position] = orientation value at that position`
+
+A legal state must satisfy:
+
+- exactly nine facelets of each colour;
+- a legal centre orientation;
+- unique edge and corner pieces;
+- edge orientation parity;
+- corner orientation parity;
+- matching edge and corner permutation parity.
+
+Invalid, incomplete, contradictory, or unreachable input must be refused.
+
+`invalid state -> no structural route claim`
+
+
+6 Structural Rank
+
+6.1 Components
+
+Let:
+
+`rho = common edge and corner permutation parity flag`
+
+`D_e = 12 - cycles(P_e)`
+
+`D_c = 8 - cycles(P_c)`
+
+`tau_e = number of edge 2-cycles`
+
+`tau_c = number of corner 2-cycles`
+
+`F = number of flipped edges`
+
+`T = sum_i min(O_c[i], 3 - O_c[i])`
+
+The lexicographic potential is:
+
+`Phi(C) = (rho, D_e + D_c, tau_e + tau_c, F, T)`
+
+The integer rank is:
+
+`W(C) = 24*rho + 4*(D_e + D_c) + tau_e + tau_c + F + T`
+
+6.2 Boundary
+
+For every legal state:
+
+`0 <= W(C) <= 126`
+
+The solved-state identity is:
+
+`W(C) = 0 iff C = SOLVED`
+
+6.3 Action Law
+
+A completed structural action must satisfy:
+
+`W_after < W_before`
+
+A route is accepted only when:
+
+- every action boundary strictly descends;
+- the complete route reaches `W = 0`;
+- the resulting facelet state is solved;
+- every exact action effect replays successfully;
+- the action chain remains continuous.
+
+The finite descent basis is:
+
+`finite non-negative W + strict descent -> finite action count`
+
+The declared maximum is:
+
+`action_count <= W(C_0) <= 126`
+
+
+7 Pure Structural Kernels
+
+The declared pure-kernel family is:
+
+`EF(i,j)`
+
+`CT(i,j)`
+
+`E3(i,j,k)`
+
+`C3(i,j,k)`
+
+`PB(i,j;k,l)`
+
+Meaning:
+
+- `EF` changes only the declared edge-flip residue;
+- `CT` changes only the declared corner-twist residue;
+- `E3` applies one declared edge 3-cycle;
+- `C3` applies one declared corner 3-cycle;
+- `PB` applies one edge swap and one corner swap together.
+
+The deterministic case order is:
+
+1. common odd parity -> `PB`;
+2. a permutation cycle of length at least three -> `E3` or `C3`;
+3. paired 2-cycles -> deterministic 3-cycle repair;
+4. identity permutations with edge-flip residue -> `EF`;
+5. corner-twist residue -> `CT`.
+
+Each target contract binds:
+
+- kernel type;
+- piece identities;
+- direction or power where applicable;
+- predicted legal state;
+- predicted rank;
+- canonical contract text;
+- contract SHA-256.
+
+
+8 Constructive Kernel Compiler
+
+The compiler constructs an exact face-turn realization of an isolated pure-kernel effect.
+
+The compiler authority boundary is:
+
+`compiler_search_input = ISOLATED_PURE_KERNEL_EFFECT_ONLY`
+
+The compiler does not solve the current cube.
+
+It receives a pure-effect target, constructs a deterministic realization, and returns:
+
+- normalized move sequence;
+- exact target effect;
+- compiler profile;
+- compiler hash;
+- repeatability evidence.
+
+Admission requires:
+
+`compiled sequence applied to current state = predicted complete cubie state`
+
+and:
+
+`W_after < W_before`
+
+A realization that fails exact replay is refused.
+
+The compiler catalogue in v1.0.2 contains:
+
+`2,292 entries`
+
+Its root is:
+
+`e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4`
+
+
+9 Canonical Graph Authority
+
+9.1 Base Graph
+
+The base observed graph is serialized under:
+
+`SCGS-1-D02`
+
+It contains:
+
+- direction obligations;
+- home obligations;
+- direction-before-home edges;
+- final-closure edges;
+- permutation-cycle couplings.
+
+The graph hash is:
+
+`graph_hash = SHA256(canonical_graph_bytes)`
+
+State identity and graph identity remain separate:
+
+`state_hash != graph_hash`
+
+9.2 Graph Scope
+
+The graph is a declared observed obligation graph.
+
+It is not claimed as the unique or complete dependency graph for every possible cube method.
+
+The graph is sufficient for the declared selector only when:
+
+- the relation family is explicit;
+- the target pool is explicit;
+- the ablation behaviour is measured;
+- exact action verification remains independent of graph score.
+
+9.3 Materiality Evidence
+
+The graph-ablation corpus compared:
+
+- full graph;
+- no cycle couplings;
+- no direction-home edges;
+- no final-closure fan;
+- no graph.
+
+All 500 routes across the five views solved with strict W descent and zero fallback.
+
+Measured decision changes were:
+
+`no cycle couplings -> 48 of 100 seeds changed`
+
+`no direction-home edges -> 100 of 100 seeds changed`
+
+`no final-closure fan -> 0 of 100 seeds changed`
+
+`no graph -> 100 of 100 seeds changed`
+
+This demonstrates measured decision influence of the cycle and direction-home relation families under the declared selector.
+
+The no-final-closure-fan view produced a measured no-delta result.
+
+It does not establish that every graph relation influences selection or improves route length.
+
+
+10 Graph-Governed Economy Policy
+
+The v1.0.2 policy is:
+
+`full graph ranking -> top 4 admitted targets -> depth 4 structural lookahead -> lowest compiled face-turn cost`
+
+The selector first preserves graph authority by forming a graph-ranked pool.
+
+It then evaluates only admitted pure-kernel continuations.
+
+The comparison metric is:
+
+`NORMALIZED_COMPILED_FACE_TURN_COUNT`
+
+The lookahead does not read:
+
+- a reference solution for the current state;
+- a reference distance for the current state;
+- elapsed time;
+- animation state;
+- lesson-panel state.
+
+Tie resolution is deterministic.
+
+The route profile is:
+
+`SC-GRAPH-ECONOMY-ROUTE-1-D01-EXP-A`
+
+The policy profile is:
+
+`SC-GRAPH-ECONOMY-POLICY-1-D01-EXP-A`
+
+The graph profile is:
+
+`SC-GRAPH-AUTHORITY-1-D01-EXP-A`
+
+
+11 Interactive Authority
+
+Auto Resolve and With Hint use:
+
+`GRAPH_GOVERNED_ECONOMY_PRIMARY_AUTHORITY`
+
+The normal interactive sequence is:
+
+`read current state`
+
+`build current graph`
+
+`enumerate strict-descent targets`
+
+`verify exact pure effects`
+
+`rank by full graph`
+
+`form top-four pool`
+
+`apply depth-four economy comparison`
+
+`select deterministically`
+
+`compile exact action`
+
+`replay and verify`
+
+`show Strategy and Plan`
+
+`execute Move`
+
+`rebuild from the new state`
+
+The user may make a different legal move.
+
+The application then discards the remaining plan and resolves from the new current state.
+
+`scramble history dependency = NONE`
+
+
+12 Structural Learning
+
+Every guided action has three visible layers.
+
+Strategy:
+
+`the larger structural goal`
+
+Plan:
+
+`why the next action belongs to that goal`
+
+Move:
+
+`the exact instruction`
+
+The message law is:
+
+`message claim -> state witness`
+
+The learning layer must not invent a protected piece, return, dependency reduction, or structural gain.
+
+When the evidence supports only general guidance, the application must use general guidance.
+
+The Technical view remains separate from the simple learning view.
+
+
+13 Determinism and Operational Isolation
+
+Resolution verdicts use declared structural rules and deterministic search limits.
+
+Elapsed time is telemetry only.
+
+`wall_clock_authority = NONE`
+
+User cancellation is an execution state.
+
+`user cancellation -/-> mathematical verdict`
+
+The benchmark runner is isolated from:
+
+- animation;
+- reading delays;
+- lesson rendering;
+- interaction timing.
+
+Random Start uses:
+
+`xorshift32`
+
+The reproducibility law is:
+
+`same seed + same generator version + same scramble length -> same scramble`
+
+The route reproducibility law is:
+
+`same canonical state + same profiles + same deterministic rules -> same route evidence`
+
+
+14 Evidence Architecture
+
+The principal evidence domains are:
+
+- canonical state hash;
+- SCGS graph hash;
+- structural-rank hash;
+- kernel-contract hash;
+- compiler hash;
+- selected-action hash;
+- action evidence chain;
+- route hash;
+- portable certificate root;
+- certificate aggregate root;
+- bundle root;
+- version manifest root;
+- version report canonical root.
+
+Every domain is separated.
+
+`state hash != graph hash != rank hash != contract hash != compiler hash != certificate root`
+
+Action evidence commits:
+
+`previous chain value`
+
+`source state hash`
+
+`source graph hash`
+
+`selected target`
+
+`compiled algorithm`
+
+`target state hash`
+
+`rank before`
+
+`rank after`
+
+`exact effect verdict`
+
+`strict descent verdict`
+
+`resulting state hash`
+
+
+15 SCCERT Portable Certificates
+
+15.1 Certificate Profile
+
+The current profile is:
+
+`SCCERT-1-D02-EXP-A`
+
+Each certificate records:
+
+- source corpus record;
+- canonical source state;
+- source state hash;
+- structural route;
+- graph-governed decisions;
+- exact kernel target for every action;
+- compiled move sequence;
+- rank before and after;
+- exact state transition;
+- graph evidence;
+- action chain;
+- final solved state;
+- certificate root.
+
+15.2 Corpus Package
+
+The certificate corpus profile is:
+
+`SCCERT-ECONOMY-CORPUS-1-D01-EXP-A`
+
+The package contains:
+
+- 100 certificates;
+- the realization catalogue;
+- the certificate manifest;
+- aggregate root;
+- bundle root;
+- producer verification evidence;
+- independent verification evidence.
+
+15.3 Root Laws
+
+The certificate root is computed from canonical certificate JSON excluding its root field.
+
+The aggregate root is:
+
+`SHA256(certificate manifest bytes)`
+
+The bundle root is:
+
+`SHA256(canonical bundle JSON excluding bundle_root)`
+
+The agreed certificate identities are:
+
+`certificate_aggregate_root = d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472`
+
+`certificate_bundle_root = c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7`
+
+
+16 Independent Verification
+
+The independent verifier is:
+
+`Structural_Cube_v1_0_2_Verifier.py`
+
+It uses the Python standard library and does not call the browser resolver.
+
+It independently checks:
+
+- cube move permutations;
+- legal state extraction;
+- state hashes;
+- structural ranks;
+- SCGS graph views used by the selector;
+- strict-descent candidate enumeration;
+- graph scores;
+- top-four pool;
+- depth-four economy choice;
+- realization catalogue effects;
+- action transitions;
+- action chains;
+- certificate roots;
+- certificate manifest;
+- aggregate root;
+- bundle root;
+- final solved states.
+
+The independent result is:
+
+`status = PASS`
+
+`failure_count = 0`
+
+`certificate_count = 100`
+
+`passed_certificate_count = 100`
+
+`failed_certificate_count = 0`
+
+The verifier establishes independent replay and decision checking for the declared corpus.
+
+It is not an independently written route producer.
+
+
+17 Committed P100 Evidence
+
+17.1 Corpus Identity
+
+The source corpus is:
+
+`SC-CORPUS-4.2F-P100-D01`
+
+The seed set is:
+
+`1..100`
+
+The scramble length is:
+
+`22`
+
+The generator is:
+
+`xorshift32`
+
+The source manifest hash is:
+
+`9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd`
+
+17.2 Integrity
+
+The corpus result is:
+
+`completed_seed_count = 100`
+
+`strict_W_status = PASS`
+
+`final_solved_status = PASS`
+
+`reference_isolation_status = PASS`
+
+`zero_fallback_status = PASS`
+
+`repeatability = PASS`
+
+17.3 Route Economy
+
+Earlier full-graph selector:
+
+`mean = 193.99`
+
+`median = 194.5`
+
+`p95 = 233`
+
+`maximum = 252`
+
+Graph-governed economy selector:
+
+`mean = 174.58`
+
+`median = 172`
+
+`p95 = 207`
+
+`maximum = 223`
+
+Comparison:
+
+`improved seeds = 100`
+
+`equal seeds = 0`
+
+`regressed seeds = 0`
+
+`total_moves_saved = 1941`
+
+The action distribution remained nearly unchanged:
+
+`earlier mean actions = 13.41`
+
+`economy mean actions = 13.42`
+
+This indicates that the move reduction comes from lower-cost certified realizations rather than removal of structural action boundaries.
+
+
+18 Authority Firewall
+
+The current route keeps these boundaries:
+
+Proposal:
+
+`current state + structural rank + graph + policy -> candidates`
+
+Exact-effect verification:
+
+`candidate contract + pure effect -> admit or refuse`
+
+Selection:
+
+`graph-ranked admitted pool + isolated pure-kernel realization costs + declared economy policy -> selected admitted target`
+
+Compilation:
+
+`isolated pure effect -> deterministic realization`
+
+Execution verification:
+
+`current state + compiled moves -> exact predicted target state`
+
+Measurement:
+
+`route statistics after selection`
+
+Prohibited inputs to proposal and selection include:
+
+- current-state reference solution;
+- current-state reference distance;
+- elapsed time;
+- hidden fallback;
+- animation timing;
+- user-interface timing.
+
+The authority declaration is:
+
+`route_authority = REFERENCE_FREE_STRUCTURAL_KERNEL_AUTHORITY`
+
+`graph_authority = FULL_GRAPH`
+
+`economy_policy = TOP_4_GRAPH_POOL_DEPTH_4`
+
+
+19 Refusal and Failure Behaviour
+
+The application must refuse a route when:
+
+- the state is illegal;
+- a structural target cannot be constructed;
+- a compiler realization cannot be verified;
+- exact effect differs from the contract;
+- W does not strictly decrease;
+- chain continuity fails;
+- final state is not solved;
+- a hidden reference or fallback path is detected.
+
+The rule is:
+
+`unverified route -> no solved claim`
+
+A refusal is preferable to an unsupported structural claim.
+
+
+20 Version Evidence
+
+The maintained version manifest is:
+
+`Structural_Cube_v1_0_2_Manifest.txt`
+
+The maintained version report is:
+
+`Structural_Cube_v1_0_2_Report.json`
+
+The version evidence records:
+
+`version_manifest_root = 74a6b3f92de7fe8e9d42ea5ee05ba7e54908ff2cdcbfcec31c3312f6d8e64ea2`
+
+`version_report_root = eb911576bbfbb7dd8ce6f9293ba81f361bce112f30450ead9d7c69ea0fc69225`
+
+Here, `version_report_root` is the canonical report-object root calculated under the declared report profile. It is not the raw SHA-256 of the exact stored report file bytes.
+
+The manifest binds the six substantive artifacts:
+
+- application HTML;
+- certificate bundle;
+- certificate manifest;
+- producer verification report;
+- independent verifier;
+- independent verification report.
+
+
+21 Maintained Distribution Package
+
+The principal v1.0.2 implementation and evidence package contains:
+
+`Structural_Cube_v1_0_2.html`
+
+`Structural_Cube_v1_0_2_Verifier.py`
+
+`Structural_Cube_v1_0_2_Certificate_Bundle.json`
+
+`Structural_Cube_v1_0_2_Certificate_Manifest.txt`
+
+`Structural_Cube_v1_0_2_Producer_Verification_Report.json`
+
+`Structural_Cube_v1_0_2_Independent_Verification_Report.json`
+
+`Structural_Cube_v1_0_2_Manifest.txt`
+
+`Structural_Cube_v1_0_2_Report.json`
+
+The HTML is the normal user application.
+
+The remaining files provide reproducible technical evidence.
+
+
+22 Capability Boundary
+
+The current evidence supports these statements:
+
+- Structural Cube v1.0.2 uses graph-governed reference-free structural authority for Auto Resolve and With Hint.
+- Every committed P100 route solves with strict W descent.
+- No committed P100 route uses fallback.
+- No committed P100 route reads a current-state reference route or reference distance.
+- The economy policy shortens all 100 routes relative to the declared earlier full-graph selector.
+- The browser producer verifies all 100 certificates.
+- The independent Python verifier verifies all 100 certificates.
+- Tamper rejection is present for the declared test vector.
+- The version manifest and report bind the maintained artifacts.
+
+The current evidence does not support these statements:
+
+- every legal cube state has been exhaustively tested;
+- every legal state has a formally established compiler realization under an independently reviewed proof;
+- the route is shortest;
+- the route is faster than competition solvers;
+- the observed graph is the unique complete dependency graph;
+- the learning method is proven superior;
+- the system is suitable for safety-critical use.
+
+
+23 Deployment Direction
+
+The next architecture work should preserve v1.0.2 behaviour while increasing evidence breadth.
+
+Priority directions are:
+
+1. Stabilize SCRANK, kernel-contract, compiler, graph-policy, and SCCERT specifications under independently reviewable canons.
+2. Produce an independently written route producer that reaches the same declared decisions without sharing the browser implementation.
+3. Extend testing beyond P100 with long-cycle, orientation-heavy, parity-boundary, and manually constructed legal corpora.
+4. Add systematic mutation corpora for every certificate field and every root domain.
+5. Improve compiled move economy without weakening graph authority or strict descent.
+6. Measure learning outcomes separately from resolver correctness.
+7. Generalize the architecture to other finite transformation systems only after their legal state, rank, action contracts, and evidence canons are explicit.
+
+The governing deployment law is:
+
+`broader claim -> broader independent evidence`
+
+
+24 Development Lineage
+
+The v1.0.2 architecture was reached through these technical layers:
+
+`Stage 4.1 -> corpus telemetry, authority separation, closure evidence, occupancy evidence, and comparative reporting`
+
+`Stage 4.2 -> structural rank, pure kernels, constructive compilation, and reference-free strict descent`
+
+`Stage 4.3 -> portable route certificates and independent replay verification`
+
+`Stage 4.4A -> graph materiality through controlled ablation`
+
+`Stage 4.4B -> graph-aware route economy`
+
+`Stage 4.4C -> promotion of the economy resolver to interactive authority`
+
+`v1.0.2 -> regenerated economy-route SCCERT corpus and independent verification`
+
+The stage labels describe development history.
+
+The operational identity is simply:
+
+`Structural Cube v1.0.2`
+
+
+25 Core Laws
+
+State law:
+
+`same canonical state + same declared profiles -> same structural evidence`
+
+Authority law:
+
+`structure proposes, verification admits or refuses, economy chooses among admitted targets`
+
+Rank law:
+
+`W(C_(i+1)) < W(C_i)`
+
+Termination law:
+
+`finite non-negative W + strict descent + continued admitted-action availability + exact replay + W(C) = 0 iff C = SOLVED -> solved termination`
+
+Graph law:
+
+`canonical state -> SCGS graph bytes -> graph hash`
+
+Economy law:
+
+`graph-ranked admitted pool -> deterministic structural lookahead -> lowest declared compiled cost`
+
+Compiler law:
+
+`isolated pure effect -> deterministic realization -> exact effect`
+
+Reference-isolation law:
+
+`current-state reference route -/-> proposal`
+
+`current-state reference route -/-> ranking`
+
+`current-state reference distance -/-> proposal`
+
+`current-state reference distance -/-> ranking`
+
+Learning law:
+
+`verified structural action -> Strategy -> Plan -> Move`
+
+Evidence law:
+
+`state -> graph -> rank -> target -> compiler -> action -> chain -> certificate -> aggregate -> bundle -> version evidence`
+
+Claim law:
+
+`measured corpus evidence != universal proof`
+
+
+26 Conclusion
+
+Structural Cube v1.0.2 demonstrates a complete evidence path from current cube state to graph-governed structural action, exact compilation, strict rank descent, solved closure, portable certificate, aggregate identity, and independent verification.
+
+Its central contribution is not a claim to replace established cube mathematics.
+
+Its contribution is an explicit authority architecture in which:
+
+- the current structure determines the admissible action family;
+- the graph influences the target decision;
+- the economy policy compares only certified structural continuations;
+- every action must replay exactly;
+- every completed boundary must reduce the structural rank;
+- the same evidence supports the learning message;
+- the complete route can be verified outside the browser.
+
+The honest summary is:
+
+`reference-free structural authority + graph-governed economy + strict descent + portable evidence + independent verification`

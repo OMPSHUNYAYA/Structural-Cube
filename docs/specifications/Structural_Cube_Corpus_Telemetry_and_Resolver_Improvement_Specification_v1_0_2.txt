@@ -1,0 +1,1187 @@
+STRUCTURAL CUBE
+
+Corpus, Telemetry, and Resolver Improvement Specification
+
+Document version:
+v1.0.2
+
+Specification status:
+Implementation and benchmark specification - Version 1.0.2
+
+Applicable implementation family:
+Structural Cube v1.0.2 and compatible later versions
+
+Related profiles:
+SC-CORPUS-4.2F-P100-D01
+SC-CORPUS-MANIFEST-4.2F-P100-D01
+SC-GRAPH-AUTHORITY-1-D01-EXP-A
+SC-GRAPH-ABLATION-P100-1-D01-EXP-A
+SC-GRAPH-ECONOMY-P100-1-D01-EXP-A
+SCCERT-1-D02-EXP-A
+SCCERT-ECONOMY-CORPUS-1-D01-EXP-A
+SC-V1-0-2-MANIFEST-1-D01
+SC-V1-0-2-REPORT-1-D01
+
+Version date:
+July 2026
+
+
+1 Purpose
+
+This specification defines how Structural Cube commits a deterministic corpus, records resolver evidence, compares structural policies, rejects disguised regressions, and binds the accepted result into portable certificates.
+
+The governing question is:
+
+`Can structural authority increase while legality, exact replay, strict rank descent, solved closure, reference isolation, zero fallback, deterministic identity, and controlled route economy remain preserved?`
+
+The improvement law is:
+
+`preserved integrity + stronger declared authority + measured route benefit -> accepted improvement`
+
+The anti-disguise law is:
+
+`more structural labels != more structural authority`
+
+A resolver change is not an improvement merely because it:
+
+- renames a fallback;
+- changes action boundaries;
+- hides a reference route behind structural terminology;
+- improves an average while worsening many seeds;
+- shortens moves by removing evidence boundaries;
+- changes the corpus after seeing the result;
+- changes the move-counting metric without declaration;
+- changes the policy without binding its identity;
+- passes browser verification while failing independent replay.
+
+
+2 Scope
+
+2.1 Included
+
+This specification covers:
+
+- corpus identity;
+- seed and scramble reproducibility;
+- source-state commitment;
+- benchmark isolation;
+- build and profile identity;
+- action and move counting;
+- strict W trajectories;
+- solved-state verification;
+- graph-authority measurement;
+- graph ablation;
+- route-economy comparison;
+- reference isolation;
+- fallback detection;
+- repeatability;
+- tamper rejection;
+- SCCERT corpus generation;
+- browser producer verification;
+- independent Python verification;
+- aggregate and bundle roots;
+- version manifest and report;
+- allowed and prohibited claims.
+
+2.2 Excluded
+
+This specification does not:
+
+- define cube legality tables in full;
+- replace SCGS-1-D02;
+- define every SCRANK field in full;
+- prove compiler totality for every legal state;
+- claim shortest-route optimality;
+- claim competition-speed performance;
+- permit wall-clock time to govern a verdict;
+- permit a current-state reference route or current-state reference distance to enter proposal or ranking;
+- establish learner effectiveness;
+- establish safety-critical suitability.
+
+
+3 Corpus Identity
+
+3.1 Corpus Profile
+
+The committed source corpus is:
+
+`SC-CORPUS-4.2F-P100-D01`
+
+3.2 Seed Set
+
+The seed set is:
+
+`1 <= seed <= 100`
+
+The corpus contains exactly 100 records.
+
+3.3 Scramble Generator
+
+The generator is:
+
+`xorshift32`
+
+The generator family is:
+
+`Structural Cube Core`
+
+The generator version is:
+
+`0.1.0`
+
+3.4 Scramble Length
+
+Every source record uses:
+
+`scramble_length = 22`
+
+3.5 Generation Law
+
+For each seed s:
+
+`algorithm_s = generateScramble(22, s)`
+
+`state_s = apply(algorithm_s, SOLVED)`
+
+The corpus record binds:
+
+- seed;
+- exact normalized scramble;
+- canonical starting facelets;
+- starting-state SHA-256;
+- generator identity;
+- move-counting metric.
+
+3.6 Source Manifest
+
+The source manifest hash is:
+
+`9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd`
+
+The manifest must exist before corpus execution.
+
+`source commitment -> execution -> report`
+
+A later change to a seed record requires a new corpus profile.
+
+3.7 Duplicate States
+
+If two seeds produce the same canonical state, both seed records remain visible.
+
+The duplicate condition must be reported.
+
+The corpus must not silently remove or substitute records.
+
+
+4 Benchmark Isolation
+
+The interactive application and corpus runner are separate operational modes.
+
+`interactive application != corpus runner`
+
+The corpus runner must:
+
+- disable animation;
+- disable reading delays;
+- avoid lesson rendering;
+- avoid user-interface timing as an authority input;
+- use the same resolver and profiles as the declared version;
+- start from the committed canonical state for each seed;
+- preserve complete route and certificate evidence;
+- report operational errors separately from structural verdicts.
+
+Elapsed time may be recorded.
+
+`wall_clock_authority = NONE`
+
+Elapsed time must not change:
+
+- candidate enumeration;
+- graph ranking;
+- economy selection;
+- compiler choice;
+- fallback activation;
+- route identity;
+- certificate identity;
+- pass or fail status.
+
+
+5 Build and Profile Identity
+
+Every corpus report must bind:
+
+- application version;
+- HTML SHA-256;
+- core version;
+- corpus profile;
+- source manifest hash;
+- structural-rank profile;
+- pure-kernel profile;
+- compiler profile;
+- graph profile;
+- economy profile;
+- route profile;
+- certificate profile;
+- verifier profile;
+- source corpus move metric;
+- economy cost metric;
+- graph pool size;
+- lookahead depth;
+- reference-route declaration;
+- reference-distance declaration;
+- fallback declaration;
+- wall-clock declaration.
+
+The reproducibility law is:
+
+`same corpus + same artifacts + same profiles + same deterministic rules -> same evidence roots`
+
+
+6 State and Rank Requirements
+
+Every source state must pass legal-state validation.
+
+The structural state is:
+
+`C = (P_e, O_e, P_c, O_c)`
+
+Legal invariants are:
+
+`sum(O_e) mod 2 = 0`
+
+`sum(O_c) mod 3 = 0`
+
+`parity(P_e) = parity(P_c)`
+
+The structural rank is:
+
+`W(C) = 24*rho + 4*(D_e + D_c) + tau_e + tau_c + F + T`
+
+Every accepted route must satisfy:
+
+`W(C_(i+1)) < W(C_i)`
+
+for every completed action.
+
+The terminal requirements are:
+
+`final_W = 0`
+
+`final_facelets = SOLVED`
+
+A route fails if either condition is false.
+
+
+7 Move and Action Counting
+
+7.1 Move and Cost Metrics
+
+The committed source corpus move metric is:
+
+`NORMALIZED_MOVE_TOKEN_COUNT`
+
+The economy cost metric is:
+
+`NORMALIZED_COMPILED_FACE_TURN_COUNT`
+
+For Structural Cube v1.0.2, both profiles apply the same declared counting rule:
+
+`one normalized compiled move token -> one counted move`
+
+Examples:
+
+`R -> 1`
+
+`R' -> 1`
+
+`R2 -> 1`
+
+The two identifiers bind different roles:
+
+`source corpus move metric -> recorded route-length measurement`
+
+`economy cost metric -> deterministic comparison among admitted structural continuations`
+
+A change in move grammar, counting rule, or metric role requires a new applicable metric identifier.
+
+7.2 Action Boundary
+
+One action is one exact pure-kernel contract together with its compiled realization and action evidence.
+
+An action boundary must preserve:
+
+- source state;
+- selected target;
+- exact effect;
+- resulting state;
+- rank before;
+- rank after;
+- action-chain continuity.
+
+A changed action-boundary policy invalidates direct action-count comparison unless both policies are reported separately.
+
+7.3 Structural Classification
+
+An action is structural only when:
+
+`candidate_origin = STRUCTURAL`
+
+`exact_effect_verified = true`
+
+`strict_W_descent = true`
+
+`graph_policy_applied = true`
+
+`reference_route_access = NONE`
+
+`current_state_reference_distance_access = NONE`
+
+`fallback_activation = NONE`
+
+No unclassified action is permitted in the primary route.
+
+
+8 Core Integrity Gates
+
+A corpus result passes the integrity gate only when:
+
+- all 100 source states match the committed manifest;
+- all 100 routes complete;
+- all 100 routes solve;
+- every action has exact effect;
+- every action strictly reduces W;
+- every final W is zero;
+- every action chain is continuous;
+- every route hash is reproducible;
+- current-state reference-route access is NONE;
+- current-state reference-distance access is NONE;
+- fallback activation is NONE;
+- repeatability passes;
+- the report root is reproducible.
+
+The integrity verdict is:
+
+`PASS`
+
+only when failure count is zero.
+
+
+9 Reference Isolation
+
+The proposal and ranking lanes may read:
+
+`current canonical state`
+
+`structural rank`
+
+`SCGS graph`
+
+`declared policy`
+
+`isolated pure-kernel realization costs`
+
+They must not read:
+
+`current-state reference solution`
+
+`current-state reference distance`
+
+`historical scramble route`
+
+`elapsed time`
+
+`lesson state`
+
+The declared result for v1.0.2 is:
+
+`reference_route_access = NONE`
+
+`current_state_reference_distance_access = NONE`
+
+`fallback_activation = NONE`
+
+
+10 Graph-Authority Corpus
+
+10.1 Views
+
+The graph-ablation corpus uses:
+
+`FULL_GRAPH`
+
+`NO_CYCLE_COUPLINGS`
+
+`NO_DIRECTION_HOME_EDGES`
+
+`NO_FINAL_CLOSURE_FAN`
+
+`NO_GRAPH`
+
+10.2 Shared Requirements
+
+Every view must preserve:
+
+- the same source states;
+- the same legal kernels;
+- exact effect;
+- strict W descent;
+- solved closure;
+- reference isolation;
+- zero fallback.
+
+10.3 Materiality Test
+
+`same corpus + same admitted kernel system + controlled graph-view change -> measured decision delta or measured no-delta result`
+
+A graph relation family is materially influential under the declared selector when its controlled removal changes at least one:
+
+- selected target;
+- action order;
+- route hash;
+- or declared decision sequence.
+
+A zero decision-delta result must remain visible and must not be reclassified as material influence.
+
+10.4 P100 Result
+
+The graph-ablation corpus completed:
+
+`100 seeds x 5 views = 500 routes`
+
+All 500 routes passed integrity.
+
+Decision changes were:
+
+`NO_CYCLE_COUPLINGS = 48 of 100`
+
+`NO_DIRECTION_HOME_EDGES = 100 of 100`
+
+`NO_FINAL_CLOSURE_FAN = 0 of 100`
+
+`NO_GRAPH = 100 of 100`
+
+The final-closure fan remains valid global closure evidence, but it was not a local decision-driving relation under the declared scoring profile.
+
+
+11 Route-Economy Policy
+
+11.1 Policy
+
+The economy policy is:
+
+`full graph ranking -> top 4 admitted targets -> depth 4 structural lookahead -> lowest compiled face-turn cost`
+
+The graph pool size is:
+
+`4`
+
+The lookahead depth is:
+
+`4`
+
+The cost metric is:
+
+`NORMALIZED_COMPILED_FACE_TURN_COUNT`
+
+11.2 Isolation
+
+Economy comparison is permitted only among:
+
+- exact pure-kernel targets;
+- strict-descent targets;
+- graph-ranked targets inside the declared pool.
+
+Economy comparison must not introduce:
+
+- current-state reference-route information;
+- current-state reference-distance information;
+- hidden fallback;
+- time-based admissibility.
+
+11.3 Repeatability
+
+The same source state and profiles must produce:
+
+- the same selected targets;
+- the same action count;
+- the same move count;
+- the same W trajectory;
+- the same route hash.
+
+
+12 Route-Economy Comparison
+
+12.1 Earlier Full-Graph Selector
+
+The measured move distribution was:
+
+`count = 100`
+
+`mean = 193.99`
+
+`median = 194.5`
+
+`p95 = 233`
+
+`maximum = 252`
+
+`minimum = 154`
+
+12.2 Graph-Governed Economy Selector
+
+The measured move distribution is:
+
+`count = 100`
+
+`mean = 174.58`
+
+`median = 172`
+
+`p95 = 207`
+
+`maximum = 223`
+
+`minimum = 131`
+
+12.3 Delta Distribution
+
+The signed law is:
+
+`move_delta = economy_moves - earlier_moves`
+
+The result is:
+
+`mean delta = -19.41`
+
+`median delta = -19`
+
+`p95 delta = -7`
+
+`largest reduction = 38`
+
+`smallest reduction = 2`
+
+12.4 Seed Classification
+
+`improved_seed_count = 100`
+
+`equal_seed_count = 0`
+
+`regressed_seed_count = 0`
+
+`every_seed_strict_improvement = true`
+
+`total_moves_saved = 1941`
+
+12.5 Action Counts
+
+Earlier action distribution:
+
+`mean = 13.41`
+
+`median = 13`
+
+`p95 = 16`
+
+`maximum = 17`
+
+Economy action distribution:
+
+`mean = 13.42`
+
+`median = 13`
+
+`p95 = 16`
+
+`maximum = 17`
+
+The action counts show that move savings were not created by suppressing structural boundaries.
+
+
+13 Distribution Metrics
+
+Every corpus report must include:
+
+- count;
+- minimum;
+- mean;
+- median;
+- p95;
+- maximum.
+
+Averages alone are insufficient.
+
+A result with a lower mean and severe tail regression must be classified as a trade-off, not an unqualified improvement.
+
+Values are sorted in ascending numeric order before median or percentile calculation.
+
+For an odd sample count, the median is the central sorted value.
+
+For an even sample count, the median is the arithmetic mean of the two central sorted values.
+
+For a non-empty sample of size n, the declared p95 method is the nearest-rank method with zero-based indexing:
+
+`p95_index = ceil(0.95*n) - 1`
+
+`p95 = sorted_values[p95_index]`
+
+The index must be clamped to:
+
+`0 <= p95_index <= n - 1`
+
+The same method must be used for route moves, action counts, and signed move deltas.
+
+
+14 Repeatability Gate
+
+At least one declared seed must be rerun from the same committed source record.
+
+The repeatability check must compare:
+
+- route hash;
+- action count;
+- move count;
+- W trajectory;
+- final state;
+- certificate root where applicable.
+
+The declared v1.0.2 repeatability seed is:
+
+`42`
+
+The result is:
+
+`PASS`
+
+
+15 Tamper-Rejection Gate
+
+The evidence package must include at least one mutation vector.
+
+The current producer mutation vector is:
+
+`REGRESSED_SEED_COUNT_MUTATION`
+
+The expected result is:
+
+`REJECT`
+
+The observed producer result is:
+
+`tamper_rejection = PASS`
+
+A mutation test is evidence for the declared field and checker.
+
+It is not evidence that every possible mutation family has been exhausted.
+
+
+16 SCCERT Certificate Corpus
+
+16.1 Certificate Profile
+
+The certificate profile is:
+
+`SCCERT-1-D02-EXP-A`
+
+16.2 Corpus Profile
+
+The certificate corpus profile is:
+
+`SCCERT-ECONOMY-CORPUS-1-D01-EXP-A`
+
+16.3 Required Certificate Fields
+
+Every certificate must bind:
+
+- source seed;
+- source state;
+- source state hash;
+- route profile;
+- graph profile;
+- economy profile;
+- realization catalogue root;
+- action list;
+- target contracts;
+- compiled algorithms;
+- source and target hashes for every action;
+- rank before and after every action;
+- exact-effect verdict;
+- strict-descent verdict;
+- final solved state;
+- action chain;
+- certificate root.
+
+16.4 Certificate Root
+
+The certificate root is:
+
+`SHA256(canonical certificate JSON excluding certificate_root)`
+
+16.5 Aggregate Manifest
+
+The certificate manifest records one row per seed and binds:
+
+- seed;
+- source state hash;
+- certificate root;
+- route hash;
+- action count;
+- move count;
+- final W;
+- verification status.
+
+The aggregate root is:
+
+`SHA256(certificate manifest bytes)`
+
+16.6 Bundle Root
+
+The bundle root is:
+
+`SHA256(canonical bundle JSON excluding bundle_root)`
+
+
+17 Realization Catalogue
+
+The realization catalogue contains deterministic exact realizations of isolated pure-kernel effects.
+
+The catalogue profile is:
+
+`SCCERT-ECONOMY-REALIZATION-CATALOG-1-D01-EXP-A`
+
+The current entry count is:
+
+`2,292`
+
+The root is:
+
+`e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4`
+
+A verifier must confirm:
+
+- each referenced realization exists;
+- its identity matches the target;
+- its normalized moves replay to the declared pure effect;
+- the catalogue root is correct.
+
+
+18 Browser Producer Verification
+
+The producer report must include:
+
+- certificate count;
+- passed count;
+- failed count;
+- source manifest hash;
+- realization catalogue root;
+- catalogue entry count;
+- aggregate root;
+- bundle root;
+- bundle verification status;
+- tamper rejection;
+- expected-root match;
+- elapsed time as telemetry;
+- wall-clock authority declaration.
+
+The v1.0.2 result is:
+
+`status = PASS`
+
+`certificate_count = 100`
+
+`passed_certificate_count = 100`
+
+`failed_certificate_count = 0`
+
+`browser_bundle_verification = PASS`
+
+`tamper_rejection = PASS`
+
+`expected_root_match = PASS`
+
+
+19 Independent Verification
+
+The independent verifier must not call the browser resolver.
+
+It must independently check:
+
+- legal moves;
+- cubie extraction;
+- state hashes;
+- rank values;
+- graph views;
+- graph scores;
+- top-four target pool;
+- depth-four economy selection;
+- exact realization effects;
+- action transitions;
+- action chains;
+- certificate roots;
+- aggregate manifest;
+- bundle root;
+- final solved states.
+
+The v1.0.2 independent result is:
+
+`status = PASS`
+
+`failure_count = 0`
+
+`certificate_count = 100`
+
+`passed_certificate_count = 100`
+
+`failed_certificate_count = 0`
+
+The independent verifier is a verifier, not an independent route producer.
+
+
+20 Principal Roots
+
+The source manifest hash is:
+
+`9c19312da2dc9832630b78f26ff305c82e7b26e8d93257c1143de649e7404bdd`
+
+The realization catalogue root is:
+
+`e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4`
+
+The certificate aggregate root is:
+
+`d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472`
+
+The certificate bundle root is:
+
+`c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7`
+
+The version manifest root is:
+
+`74a6b3f92de7fe8e9d42ea5ee05ba7e54908ff2cdcbfcec31c3312f6d8e64ea2`
+
+The version report canonical root is:
+
+`eb911576bbfbb7dd8ce6f9293ba81f361bce112f30450ead9d7c69ea0fc69225`
+
+These roots occupy separate domains and must not be substituted for one another.
+
+
+21 Report Structure
+
+21.1 Source Corpus Manifest
+
+Required fields:
+
+- profile;
+- corpus profile;
+- seed range;
+- seed count;
+- scramble length;
+- generator;
+- generator version;
+- move metric;
+- canonical rows;
+- manifest hash.
+
+21.2 Route Report
+
+Required fields:
+
+- source record;
+- initial W;
+- final W;
+- action count;
+- move count;
+- W trajectory;
+- route hash;
+- evidence-chain tail;
+- first and last decisions;
+- graph pool size;
+- lookahead depth;
+- reference access declarations;
+- fallback declaration.
+
+21.3 Corpus Summary
+
+Required fields:
+
+- requested count;
+- completed count;
+- integrity status;
+- strict W status;
+- solved status;
+- reference isolation;
+- zero fallback;
+- action distribution;
+- move distribution;
+- repeatability;
+- failures.
+
+21.4 Comparison Report
+
+Required fields:
+
+- earlier profile;
+- candidate profile;
+- corpus-lock result;
+- per-seed deltas;
+- distribution deltas;
+- improved, equal, and regressed seed counts;
+- total moves saved;
+- integrity comparison;
+- acceptance status.
+
+21.5 Certificate Bundle
+
+Required fields:
+
+- producer identity;
+- authority declarations;
+- source manifest;
+- realization catalogue;
+- certificate array;
+- certificate manifest;
+- summary;
+- claim boundary;
+- bundle root.
+
+21.6 Version Report
+
+Required fields:
+
+- version identity;
+- version manifest root;
+- artifact hashes;
+- producer-verification summary;
+- independent-verification summary;
+- authority declaration;
+- claim boundary;
+- version report canonical root.
+
+
+22 Acceptance Gates
+
+22.1 Integrity Gate
+
+Required:
+
+`100 of 100 complete`
+
+`100 of 100 solved`
+
+`strict W PASS`
+
+`final W = 0 PASS`
+
+`exact effect PASS`
+
+`reference isolation PASS`
+
+`zero fallback PASS`
+
+`repeatability PASS`
+
+22.2 Graph Materiality Gate
+
+Required:
+
+- at least one declared graph relation family changes decisions;
+- all ablation views preserve route integrity;
+- graph influence is reported separately from route superiority.
+
+22.3 Economy Gate
+
+Required:
+
+- no integrity regression;
+- no seed regression under the declared comparison;
+- lower total move count;
+- lower median;
+- lower p95;
+- lower maximum;
+- deterministic repeatability.
+
+22.4 Certificate Gate
+
+Required:
+
+- 100 certificates generated;
+- 100 browser verification passes;
+- zero browser failures;
+- aggregate root match;
+- bundle root match;
+- tamper rejection.
+
+22.5 Independent Verification Gate
+
+Required:
+
+- independent status PASS;
+- failure count zero;
+- 100 certificate passes;
+- aggregate root agreement;
+- bundle root agreement;
+- catalogue root agreement.
+
+22.6 Version Evidence Gate
+
+Required:
+
+- all substantive artifact hashes recorded;
+- version manifest root reproducible;
+- version report canonical root reproducible;
+- certificate and version roots domain-separated.
+
+
+23 v1.0.2 Acceptance Result
+
+The v1.0.2 result is:
+
+`STRUCTURAL_CUBE_V1_0_2_PASS`
+
+All declared gates in Section 22 pass for the committed P100 corpus and certificate package.
+
+
+24 Allowed Claims
+
+The evidence permits these statements:
+
+- The committed P100 corpus contains 100 deterministic seeded states.
+- Structural Cube v1.0.2 solved all 100 states.
+- Every completed action strictly reduced W.
+- Every final state was solved with W equal to zero.
+- Current-state reference-route access was NONE.
+- Current-state reference-distance access was NONE.
+- Fallback activation was NONE.
+- The graph relations caused measured decision changes.
+- The graph-governed economy policy used fewer move tokens on all 100 committed routes than the declared earlier full-graph selector.
+- The browser producer verified 100 certificates.
+- The independent Python verifier verified 100 certificates.
+- The certificate aggregate and bundle roots agree across producer and verifier.
+- The version manifest and report bind the maintained artifacts.
+
+
+25 Prohibited Claims
+
+Without broader evidence, the following claims are prohibited:
+
+- shortest solution;
+- globally optimal route;
+- competition-speed superiority;
+- exhaustive proof over every legal state;
+- complete independent route-production identity;
+- unique complete graph of cube dependency;
+- proven learner superiority;
+- safety-critical certification;
+- universal applicability to other puzzles.
+
+
+26 Additional Corpora
+
+Later corpus families may include:
+
+- long-cycle states;
+- orientation-heavy states;
+- parity-boundary states;
+- paired-2-cycle stress states;
+- high-W states;
+- low-W closure states;
+- manually constructed legal vectors;
+- larger seeded ranges;
+- mutation corpora.
+
+Each corpus family must have:
+
+- a distinct identifier;
+- a committed manifest;
+- declared generation or construction method;
+- exact source hashes;
+- separate report roots.
+
+No later corpus may silently replace P100 in a historical comparison.
+
+
+27 Performance Protection
+
+Corpus work must not degrade ordinary interaction.
+
+Required protections:
+
+- no automatic corpus execution during page load;
+- worker or non-visual execution;
+- explicit start;
+- progress callback;
+- cancellation;
+- no animation;
+- no lesson rendering;
+- no authority dependence on elapsed time.
+
+Performance measurements may guide engineering.
+
+They must not govern structural acceptance.
+
+
+28 Summary Laws
+
+Corpus law:
+
+`committed source records -> deterministic execution -> reproducible evidence`
+
+Integrity law:
+
+`exact effect + strict W descent + solved final state`
+
+Authority law:
+
+`reference route NONE + reference distance NONE + fallback NONE`
+
+Graph law:
+
+`controlled relation removal -> measured decision delta or measured no-delta result`
+
+Economy law:
+
+`same corpus + preserved integrity + no seed regression + lower total, median, p95, and maximum move count -> measured improvement`
+
+Certificate law:
+
+`100 routes -> 100 certificates -> aggregate root -> bundle root`
+
+Independent-verification law:
+
+`producer PASS + independent PASS + root agreement`
+
+Claim law:
+
+`P100 evidence != universal proof`
+
+
+29 Conclusion
+
+Structural Cube v1.0.2 establishes a complete benchmark and evidence chain for the committed P100 corpus.
+
+The current result combines:
+
+`deterministic source commitment`
+
+`graph-governed structural authority`
+
+`strict rank descent`
+
+`zero fallback`
+
+`reference isolation`
+
+`route-economy improvement`
+
+`portable certificate generation`
+
+`browser verification`
+
+`independent Python verification`
+
+`version-level artifact binding`
+
+The specification preserves one central discipline:
+
+`a structural improvement must remain visible as evidence, not merely as terminology`

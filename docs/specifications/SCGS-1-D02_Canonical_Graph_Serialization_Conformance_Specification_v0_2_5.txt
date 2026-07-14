@@ -1,0 +1,2214 @@
+STRUCTURAL CUBE
+
+SCGS-1-D02
+Canonical Graph Serialization Conformance Specification
+
+Specification status:
+Version 0.2.5
+
+Specification family:
+Structural Cube Conformance Architecture
+
+Applicable implementation family:
+Structural Cube v1.0.2 and compatible later versions
+
+Version scope:
+Structural Cube v1.0.2 integration, graph-authority separation, SCCERT-1-D02 companion identity, aggregate-certificate identity, and independent-verifier boundaries. Legal-state canonical graph bytes, T1-T4 vectors, and N1-N12 refusal expectations remain unchanged from Version 0.2.4.
+
+Version date:
+July 2026
+
+
+1 Purpose
+
+This specification defines one canonical byte representation for the base observed obligation and dependency graph G(C) of a legal canonical cube state C, and one canonical SHA-256 hash of that representation.
+
+The conformance law is:
+
+`same declared test vector -> same declared result`
+
+For the graph, that law requires every conforming implementation to produce the same bytes before hashing.
+
+SCGS-1-D02 removes implementation freedom from:
+
+- identifier spelling;
+- orientation-value representation;
+- numeric formatting;
+- record ordering;
+- section ordering;
+- separators;
+- whitespace;
+- line endings;
+- character encoding;
+- hash function;
+- refusal ordering.
+
+The governing relation is:
+
+`same canonical cube state -> same canonical graph text -> same graph hash`
+
+The differential conformance relation is:
+
+`independent implementation A + independent implementation B + same vector -> B_A = B_B`
+
+where B_A and B_B are the exact canonical byte sequences produced by the two implementations.
+
+
+2 Scope and Non-Goals
+
+2.1 Scope
+
+SCGS-1-D02 covers:
+
+- canonical 54-character facelet input;
+- canonical-input enforcement;
+- full legality preconditions;
+- cubie extraction under the Structural Cube Core v0.1.0 convention;
+- direction obligations;
+- home obligations;
+- direction-before-home dependency edges;
+- final-closure dependency edges;
+- permutation-cycle couplings;
+- canonical identifier grammar;
+- canonical byte ordering;
+- canonical text layout;
+- SHA-256 graph hashing;
+- optional JSON tooling export;
+- refusal codes;
+- complete positive vectors T1-T4 with canonical text, byte length, and SHA-256;
+- negative vectors N1-N12;
+- positive, negative, parser-negative, and metamorphic conformance requirements;
+- browser and standard-library Python differential identity;
+- migration from the v0.5.5 runtime representation.
+
+2.2 Non-Goals
+
+SCGS-1-D02 does not:
+
+- claim that the base observed graph is the unique or complete mathematical dependency graph of the cube;
+- define protected structures;
+- define temporary structures;
+- define Return Vows;
+- define action-boundary locks;
+- define candidate serialization;
+- define action serialization;
+- define route serialization;
+- define policy serialization;
+- define route-certificate serialization;
+- define the exact state-hash canon;
+- define the Stage 4.2 structural-rank canon;
+- define pure-kernel contracts, kernel compilation, shadow-route certificates, primary-route certificates, SCCERT canonical JSON, aggregate certificate manifests, or portable bundle roots;
+- change cube legality;
+- claim shortest-route optimality;
+- claim novelty over established cube mathematics.
+
+The exact scope is:
+
+`SCGS-1-D02 = canonical serialization of the base observed cubie obligation graph`
+
+It is not:
+
+`SCGS-1-D02 = canonical serialization of the complete Structural Cube decision system`
+
+
+3 Conformance Language and Terminology
+
+3.1 Normative Words
+
+The words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL are normative.
+
+3.2 Character and Line Terminology
+
+All canonical text is ASCII.
+
+`LF` means the single byte:
+
+`0x0A`
+
+`CRLF` means:
+
+`0x0D 0x0A`
+
+CRLF MUST NOT appear in canonical text.
+
+A byte-order mark MUST NOT appear.
+
+Every canonical line, including the final line, MUST end with exactly one LF.
+
+3.3 Cube Arrays
+
+For each cubie type:
+
+`perm[position] = piece identity currently occupying that position`
+
+`ori[position] = orientation value of the piece currently occupying that position`
+
+The normative permutation traversal is:
+
+`position -> perm[position]`
+
+3.4 Dependency-Edge Meaning
+
+An edge:
+
+`a>b`
+
+means:
+
+`a is a prerequisite for b`
+
+The source may be resolved before the target.
+
+The target MUST NOT be declared complete while the source remains unresolved.
+
+Therefore:
+
+`DIRECTION>HOME`
+
+means:
+
+`direction must be resolved before home closure`
+
+and:
+
+`HOME>FINAL_CLOSURE`
+
+means:
+
+`home must be resolved before final closure`
+
+Under this convention:
+
+`free obligation = node with indegree 0, excluding FINAL_CLOSURE`
+
+`DIRECTION>HOME` is a declared certification precedence. It does not require orientation and placement to occur in separate physical moves. One admitted action MAY satisfy both obligations at the same action boundary.
+
+`HOME>FINAL_CLOSURE` is a global closure relation. It remains normative graph evidence, but conformance to this specification does not require downstream progress metrics to treat the final-closure fan as informative local dependency debt.
+
+The SCGS-1 prerequisite relation does not encode dynamic occupancy blockers. Permutation-cycle couplings expose the corresponding permutation components, but action readiness remains outside this specification.
+
+
+4 Input State
+
+4.1 Canonical Facelet String
+
+The input is the canonical 54-character facelet string over:
+
+`{U, R, F, D, L, B}`
+
+The face order is:
+
+`U, R, F, D, L, B`
+
+Each face is read:
+
+`row by row -> left to right -> top to bottom`
+
+The solved state is:
+
+`UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+4.2 Canonical Centre Signature
+
+A conforming SCGS serializer MUST accept only an already canonicalized orientation.
+
+The centre facelets MUST be:
+
+`facelet[04] = U`
+
+`facelet[13] = R`
+
+`facelet[22] = F`
+
+`facelet[31] = D`
+
+`facelet[40] = L`
+
+`facelet[49] = B`
+
+A physically legal cube presented under another whole-cube orientation MUST first be canonicalized by an upstream canonicalization layer.
+
+The pipeline is:
+
+`raw facelets -> orientation canonicalization -> legality validation -> SCGS serialization`
+
+A non-canonical centre signature MUST be refused with:
+
+`CENTRE_ORIENTATION`
+
+4.3 Colour Counts
+
+The input MUST contain exactly nine occurrences of each symbol:
+
+`count(U) = 9`
+
+`count(R) = 9`
+
+`count(F) = 9`
+
+`count(D) = 9`
+
+`count(L) = 9`
+
+`count(B) = 9`
+
+4.4 Refusal Law
+
+The graph is defined only for a canonical legal reachable state.
+
+`illegal or unreachable state -> no graph -> no graph hash`
+
+A conforming implementation MUST NOT emit:
+
+- canonical graph text;
+- graph_hash;
+- graph certificate fields;
+
+for an input that fails validation.
+
+4.5 Validation and Refusal Precedence
+
+A conforming implementation MUST process validation in these phases:
+
+1. `FACELET_LENGTH`
+2. `UNKNOWN_COLOUR`
+3. `COLOUR_COUNT`
+4. `CENTRE_ORIENTATION`
+5. corner extraction in ascending position order `00..07`
+6. edge extraction in ascending position order `00..11`
+7. `CORNER_TWIST_PARITY`
+8. `EDGE_FLIP_PARITY`
+9. `PERMUTATION_PARITY`
+
+Within the corner phase, each position MUST be completed before the next position is inspected.
+
+At each corner position, checks occur in this order:
+
+1. `CORNER_ORIENTATION_MISSING`
+2. `UNKNOWN_CORNER`
+3. `DUPLICATE_CORNER`
+
+Within the edge phase, each position MUST be completed before the next position is inspected.
+
+At each edge position, checks occur in this order:
+
+1. `UNKNOWN_EDGE`
+2. `DUPLICATE_EDGE`
+
+The first failure encountered under this phase, position, and step order is the refusal code.
+
+The law is:
+
+`phase order -> ascending position order -> extraction-step order`
+
+A conforming implementation MUST NOT first scan every position for one code and then restart for the next code. Such full-code scanning can disagree with the committed multi-defect vectors.
+
+Examples fixed by this rule:
+
+- N8 reports `DUPLICATE_EDGE` because the duplicate at an earlier edge position is encountered before a later unknown edge.
+- N10 reports `UNKNOWN_CORNER` because the unknown at an earlier corner position is encountered before a later missing corner orientation.
+
+This clarification preserves the existing Version 0.2 legal-state graph bytes and fixed refusal expectations.
+
+
+4.6 Refusal-State Mapping
+
+The refusal-state mapping is:
+
+`FACELET_LENGTH -> INCOMPLETE`
+
+`UNKNOWN_COLOUR -> CONFLICT`
+
+`COLOUR_COUNT -> CONFLICT`
+
+`CENTRE_ORIENTATION -> CONFLICT`
+
+`CORNER_ORIENTATION_MISSING -> CONFLICT`
+
+`UNKNOWN_CORNER -> CONFLICT`
+
+`DUPLICATE_CORNER -> CONFLICT`
+
+`UNKNOWN_EDGE -> CONFLICT`
+
+`DUPLICATE_EDGE -> CONFLICT`
+
+`CORNER_TWIST_PARITY -> FORBIDDEN_STATE`
+
+`EDGE_FLIP_PARITY -> FORBIDDEN_STATE`
+
+`PERMUTATION_PARITY -> FORBIDDEN_STATE`
+
+
+5 Normative Cubie Extraction
+
+5.1 Corner Tables
+
+Corner positions are indexed 00 through 07.
+
+```
+index  name  facelets        colours
+00     URF   [08, 09, 20]    (U, R, F)
+01     UFL   [06, 18, 38]    (U, F, L)
+02     ULB   [00, 36, 47]    (U, L, B)
+03     UBR   [02, 45, 11]    (U, B, R)
+04     DFR   [29, 26, 15]    (D, F, R)
+05     DLF   [27, 44, 24]    (D, L, F)
+06     DBL   [33, 53, 42]    (D, B, L)
+07     DRB   [35, 17, 51]    (D, R, B)
+```
+
+5.2 Edge Tables
+
+Edge positions are indexed 00 through 11.
+
+```
+index  name  facelets    colours
+00     UR    [05, 10]    (U, R)
+01     UF    [07, 19]    (U, F)
+02     UL    [03, 37]    (U, L)
+03     UB    [01, 46]    (U, B)
+04     DR    [32, 16]    (D, R)
+05     DF    [28, 25]    (D, F)
+06     DL    [30, 43]    (D, L)
+07     DB    [34, 52]    (D, B)
+08     FR    [23, 12]    (F, R)
+09     FL    [21, 41]    (F, L)
+10     BL    [50, 39]    (B, L)
+11     BR    [48, 14]    (B, R)
+```
+
+5.3 Corner Extraction
+
+Corner positions MUST be processed in ascending order `00..07`. All steps for one position MUST complete before the next position is inspected.
+
+For each corner position pos:
+
+1. Let k be the smallest value in `{0, 1, 2}` such that the facelet at `CORNER_FACELETS[pos][k]` is `U` or `D`.
+2. If no such k exists, refuse with `CORNER_ORIENTATION_MISSING`.
+3. Let:
+
+`c1 = facelet[CORNER_FACELETS[pos][(k+1) mod 3]]`
+
+`c2 = facelet[CORNER_FACELETS[pos][(k+2) mod 3]]`
+
+4. Find the unique piece j satisfying:
+
+`CORNER_COLOURS[j][1] = c1`
+
+and:
+
+`CORNER_COLOURS[j][2] = c2`
+
+5. If no piece exists, refuse with `UNKNOWN_CORNER`.
+6. If piece j has already appeared, refuse with `DUPLICATE_CORNER`.
+7. Assign:
+
+`cp[pos] = j`
+
+`co[pos] = k mod 3`
+
+Corner orientation values are:
+
+`0 = resolved orientation`
+
+`1 = first unresolved twist direction`
+
+`2 = second unresolved twist direction`
+
+The values 1 and 2 are distinct and MUST remain distinct in the graph.
+
+5.4 Edge Extraction
+
+Edge positions MUST be processed in ascending order `00..11`. All steps for one position MUST complete before the next position is inspected.
+
+For each edge position pos:
+
+1. Let:
+
+`a = facelet[EDGE_FACELETS[pos][0]]`
+
+`b = facelet[EDGE_FACELETS[pos][1]]`
+
+2. Find the unique piece j such that either:
+
+`EDGE_COLOURS[j][0] = a and EDGE_COLOURS[j][1] = b`
+
+or:
+
+`EDGE_COLOURS[j][0] = b and EDGE_COLOURS[j][1] = a`
+
+3. If the first relation holds:
+
+`ep[pos] = j`
+
+`eo[pos] = 0`
+
+4. If the reverse relation holds:
+
+`ep[pos] = j`
+
+`eo[pos] = 1`
+
+5. If no piece exists, refuse with `UNKNOWN_EDGE`.
+6. If piece j has already appeared, refuse with `DUPLICATE_EDGE`.
+
+5.5 Reachability Validation
+
+A legal reachable cube MUST satisfy:
+
+`sum(co) mod 3 = 0`
+
+`sum(eo) mod 2 = 0`
+
+`parity(cp) = parity(ep)`
+
+Failure codes are:
+
+`sum(co) mod 3 != 0 -> CORNER_TWIST_PARITY`
+
+`sum(eo) mod 2 != 0 -> EDGE_FLIP_PARITY`
+
+`parity(cp) != parity(ep) -> PERMUTATION_PARITY`
+
+
+6 Observed Graph Construction
+
+6.1 Graph Sets
+
+Construct three mathematical sets:
+
+`NODES`
+
+`EDGES`
+
+`COUPLINGS`
+
+Set semantics apply.
+
+Serialization MUST NOT depend on:
+
+- insertion order;
+- map iteration order;
+- set iteration order;
+- runtime object identity.
+
+6.2 Direction Obligations
+
+For every edge position pos:
+
+Let:
+
+`piece = ep[pos]`
+
+If:
+
+`eo[pos] = 1`
+
+add:
+
+`EDGE_DIRECTION:<piece>:1`
+
+For every corner position pos:
+
+Let:
+
+`piece = cp[pos]`
+
+If:
+
+`co[pos] = 1`
+
+add:
+
+`CORNER_DIRECTION:<piece>:1`
+
+If:
+
+`co[pos] = 2`
+
+add:
+
+`CORNER_DIRECTION:<piece>:2`
+
+No direction node is added when orientation is zero.
+
+Direction obligations are keyed by piece identity.
+
+6.3 Home Obligations
+
+For each edge position pos:
+
+Let:
+
+`piece = ep[pos]`
+
+If:
+
+`pos != piece`
+
+add:
+
+`EDGE_HOME:<piece>`
+
+For each corner position pos:
+
+Let:
+
+`piece = cp[pos]`
+
+If:
+
+`pos != piece`
+
+add:
+
+`CORNER_HOME:<piece>`
+
+Home obligations are keyed by piece identity.
+
+A piece that is home but flipped or twisted produces a direction obligation without a home obligation.
+
+6.4 Direction-Before-Home Dependencies
+
+For a piece that has both a direction obligation and a home obligation, add:
+
+`DIRECTION_NODE>HOME_NODE`
+
+Examples:
+
+`EDGE_DIRECTION:05:1>EDGE_HOME:05`
+
+`CORNER_DIRECTION:03:2>CORNER_HOME:03`
+
+The edge means:
+
+`direction is a prerequisite for certified home closure`
+
+It is an accounting and certification order. A single legal action MAY resolve direction and home together.
+
+6.5 Final Closure
+
+After Sections 6.2 through 6.4:
+
+If `NODES` is empty:
+
+- do not add `FINAL_CLOSURE`;
+- do not add any final-closure edge.
+
+If `NODES` is non-empty:
+
+1. Store the current non-closure nodes as `BASE_NODES`.
+2. Add:
+
+`FINAL_CLOSURE`
+
+3. For every node n in `BASE_NODES`, add:
+
+`n>FINAL_CLOSURE`
+
+The solved cube therefore produces:
+
+- no nodes;
+- no edges;
+- no couplings;
+- no `FINAL_CLOSURE`.
+
+`FINAL_CLOSURE` MUST NOT appear alone.
+
+The final-closure fan is normative evidence of global closure. Downstream debt metrics SHOULD report it separately from informative local dependencies and MUST NOT describe removal of a final-closure edge alone as a newly discovered local dependency cut.
+
+6.6 Permutation-Cycle Couplings
+
+For each type T in `{EDGE, CORNER}`:
+
+- let perm be ep for EDGE;
+- let perm be cp for CORNER.
+
+Decompose perm using this deterministic procedure:
+
+1. Scan positions in ascending order.
+2. When an unvisited position i is found, begin a cycle at i.
+3. Follow:
+
+`j -> perm[j]`
+
+4. Record each visited position in traversal order.
+5. Stop when the traversal returns to the starting position.
+6. Discard cycles of length 1.
+
+Because positions are scanned in ascending order, each retained cycle begins with its smallest member.
+
+A conforming implementation using another decomposition algorithm MUST normalize each cycle by:
+
+- rotating it so the smallest member is first;
+- preserving the normative traversal direction `m -> perm[m]`;
+- rejecting reversal of the cycle order.
+
+For a retained cycle:
+
+`m1, m2, ..., mk`
+
+add:
+
+`T_CYCLE:<m1>-<m2>-...-<mk>`
+
+Examples:
+
+`EDGE_CYCLE:00-08-04-11`
+
+`CORNER_CYCLE:00-04-07-03`
+
+A cycle coupling MUST contain at least two members.
+
+6.7 Derived Summaries Excluded
+
+The canonical graph contains only normative:
+
+- nodes;
+- edges;
+- couplings.
+
+The following summaries MUST NOT enter the canonical graph text:
+
+- free-obligation lists;
+- indegree totals;
+- outdegree totals;
+- solved-piece counts;
+- orientation-debt totals;
+- placement-debt totals;
+- raw and typed dependency-debt totals;
+- final-closure fan totals;
+- cycle-burden totals;
+- rankings;
+- candidate scores;
+- UI summaries.
+
+The rule is:
+
+`hash preimage = normative graph records, not summary observations`
+
+Cycle couplings remain included because they are normative graph records under this specification.
+
+
+7 Identifier Grammar
+
+7.1 ABNF
+
+The following grammar is normative.
+
+```
+node                  = direction / home / closure
+
+direction             = edge-direction / corner-direction
+edge-direction        = "EDGE_DIRECTION:" edge-index ":1"
+corner-direction      = "CORNER_DIRECTION:" corner-index ":" corner-dir
+
+home                  = edge-home / corner-home
+edge-home             = "EDGE_HOME:" edge-index
+corner-home           = "CORNER_HOME:" corner-index
+
+closure               = "FINAL_CLOSURE"
+
+edge                  = node ">" node
+
+coupling              = edge-cycle / corner-cycle
+edge-cycle            = "EDGE_CYCLE:" edge-index "-" edge-index
+                        *( "-" edge-index )
+corner-cycle          = "CORNER_CYCLE:" corner-index "-" corner-index
+                        *( "-" corner-index )
+
+edge-index            = 2DIGIT
+corner-index          = 2DIGIT
+corner-dir            = "1" / "2"
+```
+
+7.2 Index Ranges
+
+The grammar token `2DIGIT` is restricted semantically.
+
+Valid edge indices are:
+
+`00` through `11`
+
+Valid corner indices are:
+
+`00` through `07`
+
+Identifiers outside the type-specific range are invalid.
+
+7.3 Index Formatting
+
+All indices MUST be exactly two decimal digits.
+
+Examples:
+
+`00`
+
+`04`
+
+`11`
+
+Invalid examples:
+
+`0`
+
+`4`
+
+`004`
+
+`12` for an edge
+
+`08` for a corner
+
+7.4 Identifier Restrictions
+
+Identifiers MUST contain:
+
+- only uppercase ASCII letters;
+- decimal digits;
+- underscore;
+- colon;
+- hyphen;
+- greater-than sign.
+
+Whitespace MUST NOT appear inside an identifier.
+
+The characters:
+
+`|`
+
+`#`
+
+`CR`
+
+`LF`
+
+MUST NOT appear inside an identifier.
+
+The character `>` appears only as the edge separator.
+
+7.5 Cycle Restrictions
+
+A cycle coupling MUST:
+
+- contain at least two indices;
+- contain no repeated index;
+- begin with its smallest member;
+- follow the normative permutation direction;
+- use indices valid for its cubie type.
+
+
+8 Canonical Ordering
+
+8.1 Ordering Rule
+
+Within each section, records MUST be sorted in ascending byte-wise order of their ASCII encodings.
+
+Because all records are ASCII:
+
+`byte-wise order = ordinal code-point order`
+
+8.2 Prohibited Ordering
+
+A conforming serializer MUST NOT use:
+
+- locale-aware collation;
+- case-insensitive comparison;
+- numeric-aware natural sort;
+- insertion order;
+- hash-map order;
+- platform collation;
+- `Intl.Collator`;
+- `strcoll`;
+- ICU collation.
+
+8.3 Section Order
+
+Sections MUST appear in this exact order:
+
+1. `NODES`
+2. `EDGES`
+3. `COUPLINGS`
+
+The section order is not sorted dynamically.
+
+
+9 Canonical Text
+
+9.1 Version Domain Tag
+
+The first line for this specification version is:
+
+`SCGS-1-D02`
+
+The version tag is part of the hash preimage.
+
+No implementation conforming to this version may emit the final tag `SCGS-1`.
+
+The final tag is reserved for a committed specification.
+
+9.2 Layout
+
+The canonical text is:
+
+```
+version-line
+NODES
+node-records
+EDGES
+edge-records
+COUPLINGS
+coupling-records
+```
+
+Formally:
+
+```
+canonical-text = version-line
+                 section("NODES", nodes)
+                 section("EDGES", edges)
+                 section("COUPLINGS", couplings)
+
+version-line       = "SCGS-1-D02" LF
+
+section(header, R) = header LF
+                    record-1 LF
+                    record-2 LF
+                    ...
+                    record-n LF
+```
+
+9.3 Empty Sections
+
+An empty section contributes exactly its header line.
+
+It contributes:
+
+- no blank line;
+- no placeholder;
+- no count;
+- no `NONE` record.
+
+9.4 Final LF
+
+The final coupling record, or the `COUPLINGS` header when the section is empty, MUST end with LF.
+
+9.5 Encoding
+
+Canonical text MUST be encoded as ASCII.
+
+UTF-8 is byte-identical for this character set and MAY be used only when it emits the same bytes.
+
+A byte-order mark MUST NOT appear.
+
+9.6 Solved-State Canonical Text
+
+The solved cube serializes to exactly 33 bytes:
+
+```
+SCGS-1-D02
+NODES
+EDGES
+COUPLINGS
+```
+
+Every displayed line above is LF-terminated, including the last line.
+
+
+10 Canonical Hash and Identity Boundaries
+
+10.1 Graph Hash
+
+The canonical graph hash is:
+
+`graph_hash = SHA256(canonical_text_bytes)`
+
+It MUST be rendered as:
+
+- exactly 64 hexadecimal characters;
+- lowercase;
+- no prefix;
+- no spaces;
+- no trailing newline inside the value.
+
+10.2 Domain Separation
+
+The version tag provides explicit hash-domain separation.
+
+It prevents the same graph serialization from using the same preimage across specification versions.
+
+It does not claim mathematical impossibility of a SHA-256 collision.
+
+10.3 Graph Identity and State Identity
+
+`graph_hash` identifies the SCGS graph representation.
+
+It MUST NOT be labelled:
+
+- state hash;
+- facelet hash;
+- route hash;
+- action hash;
+- certificate hash.
+
+A route certificate SHOULD contain a separately versioned exact canonical state hash.
+
+The distinction is:
+
+`state_hash = exact canonical cube-state commitment`
+
+`graph_hash = canonical observed-graph commitment`
+
+The exact state-hash canon is outside SCGS-1-D02.
+
+10.4 Legacy Runtime Fingerprint
+
+The v0.5.5 runtime used a 32-bit FNV-1a fingerprint over an unversioned joined string.
+
+That value:
+
+- MAY remain for temporary in-session debugging;
+- MUST be labelled `legacy_fingerprint`;
+- MUST NOT appear as an evidence-chain hash;
+- MUST NOT appear as a conformance hash;
+- MUST NOT appear as certificate integrity evidence;
+- MUST NOT be compared with SCGS-1-D02 graph hashes.
+
+10.5 Evidence-Chain Use
+
+Where a Structural Cube certificate contains:
+
+`state_hash_i -> graph_hash_i -> candidate_hash_i -> action_hash_i -> state_hash_(i+1)`
+
+the `graph_hash_i` field MUST be the SCGS-1-D02 SHA-256 defined here while this version is in use.
+
+The other links require their own versioned canonical specifications.
+
+Recommended future domains are:
+
+`SCSTATE-1`
+
+`SCGD-1`
+
+`SCPR-1`
+
+`SCCAND-1`
+
+`SCACT-1`
+
+`SCCERT-1`
+
+10.6 Stage 4.2 Identity Separation
+
+SCGS-1-D02 identifies the base observed obligation graph only.
+
+The following Stage 4.2 identities are separate companion identities and MUST NOT enter the SCGS-1-D02 hash preimage:
+
+- structural-rank canonical text and hash;
+- pure-kernel contract text and hash;
+- deterministic target-selection receipt;
+- compiler certificate and hash;
+- shadow-route certificate and hash;
+- primary-route certificate and hash;
+- primary-audit receipt;
+- SCCERT portable certificate root;
+- SCCERT action-chain hash;
+- SCCERT aggregate certificate manifest and root;
+- SCCERT portable bundle root;
+- browser or independent verifier report;
+- `W` trajectory;
+- route move list;
+- Strategy, Plan, and Move learning text.
+
+The separation law is:
+
+`same state -> same SCGS graph bytes`
+
+even when:
+
+- rank telemetry is enabled or disabled;
+- kernel compilation is enabled or disabled;
+- the shadow resolver is enabled or disabled;
+- the primary resolver is used;
+- a Stage 4.2F corpus route is measured;
+- a Stage 4.3 certificate is produced or verified;
+- lesson rendering changes;
+- measurement is enabled or disabled.
+
+Any future attempt to include rank, kernel, compiler, route, certificate, aggregate-manifest, or verifier records inside the graph canon requires a new graph-family tag.
+
+11 Optional JSON Tooling Profile
+
+11.1 Purpose
+
+Implementations MAY export JSON for inspection, transport, and test tooling.
+
+The JSON form is not a canonical byte representation.
+
+The JSON bytes MUST NOT be hashed as the SCGS graph hash.
+
+11.2 Required Semantic Form
+
+A JSON export MUST contain:
+
+```json
+{
+  "scgs": "SCGS-1-D02",
+  "nodes": ["..."],
+  "edges": ["..."],
+  "couplings": ["..."],
+  "graph_hash": "<64 lowercase hexadecimal characters>"
+}
+```
+
+11.3 JSON Requirements
+
+The arrays MUST:
+
+- contain exactly the SCGS records;
+- use canonical record spelling;
+- use canonical record order;
+- contain no duplicates.
+
+Object-key order and insignificant JSON whitespace are not normative.
+
+A consumer MUST be able to reconstruct the canonical text and re-derive `graph_hash` exactly.
+
+
+12 Migration from the v0.5.5 Runtime Form
+
+The migration differences are:
+
+```
+aspect            v0.5.5 runtime                 SCGS-1-D02
+tag               none                           SCGS-1-D02
+indices           unpadded                       two-digit padded
+direction value   unresolved presence only       explicit orientation value
+ordering          JS default string sort         byte-wise ASCII
+preimage          "|" and "#" joined string      versioned LF text
+hash              FNV-1a 32-bit                  SHA-256
+role              runtime fingerprint            conformance graph digest
+```
+
+The migration is not a pure formatting conversion because SCGS-1-D02 adds explicit orientation values to direction identifiers.
+
+Therefore:
+
+`legacy runtime fingerprint -> no direct canonical hash conversion`
+
+The graph MUST be reconstructed from the canonical cube state under SCGS-1-D02 rules.
+
+Structural Cube v1.0.2 adopts SCGS-1-D02 directly; legacy runtime fingerprints must be reconstructed from the canonical cube state.
+
+
+13 Positive Conformance Vectors
+
+13.1 General Rule
+
+For each vector:
+
+1. Validate the canonical facelets.
+2. Extract `(ep, eo, cp, co)`.
+3. Construct `NODES`, `EDGES`, and `COUPLINGS`.
+4. Serialize exact canonical text.
+5. Compute SHA-256.
+6. Compare the exact expected digest.
+
+13.2 T1 - Solved State
+
+Algorithm:
+
+`none`
+
+Facelets:
+
+`UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Canonical text:
+
+```
+SCGS-1-D02
+NODES
+EDGES
+COUPLINGS
+```
+
+Canonical byte length:
+
+`33`
+
+SHA-256:
+
+`492e0f2d82c948099bae43a31a1e8b9982d3c93fcfd2eb40df3134b660496ddc`
+
+13.3 T2 - Single Quarter Turn
+
+Algorithm:
+
+`R`
+
+Facelets:
+
+`UUFUUFUUFRRRRRRRRRFFDFFDFFDDDBDDBDDBLLLLLLLLLUBBUBBUBB`
+
+Canonical text:
+
+```
+SCGS-1-D02
+NODES
+CORNER_DIRECTION:00:1
+CORNER_DIRECTION:03:2
+CORNER_DIRECTION:04:2
+CORNER_DIRECTION:07:1
+CORNER_HOME:00
+CORNER_HOME:03
+CORNER_HOME:04
+CORNER_HOME:07
+EDGE_HOME:00
+EDGE_HOME:04
+EDGE_HOME:08
+EDGE_HOME:11
+FINAL_CLOSURE
+EDGES
+CORNER_DIRECTION:00:1>CORNER_HOME:00
+CORNER_DIRECTION:00:1>FINAL_CLOSURE
+CORNER_DIRECTION:03:2>CORNER_HOME:03
+CORNER_DIRECTION:03:2>FINAL_CLOSURE
+CORNER_DIRECTION:04:2>CORNER_HOME:04
+CORNER_DIRECTION:04:2>FINAL_CLOSURE
+CORNER_DIRECTION:07:1>CORNER_HOME:07
+CORNER_DIRECTION:07:1>FINAL_CLOSURE
+CORNER_HOME:00>FINAL_CLOSURE
+CORNER_HOME:03>FINAL_CLOSURE
+CORNER_HOME:04>FINAL_CLOSURE
+CORNER_HOME:07>FINAL_CLOSURE
+EDGE_HOME:00>FINAL_CLOSURE
+EDGE_HOME:04>FINAL_CLOSURE
+EDGE_HOME:08>FINAL_CLOSURE
+EDGE_HOME:11>FINAL_CLOSURE
+COUPLINGS
+CORNER_CYCLE:00-04-07-03
+EDGE_CYCLE:00-08-04-11
+```
+
+Canonical byte length:
+
+`811`
+
+SHA-256:
+
+`83905d06843af686188656e0c6c2bac5c5921e542a75a15c941fcc336d46be83`
+
+This vector fixes:
+
+- explicit corner-twist values;
+- home obligations without edge-direction obligations;
+- direction-before-home edges;
+- final-closure fan;
+- smallest-member-first cycle traversal;
+- two-digit index formatting.
+
+13.4 T3 - Commutator
+
+Algorithm:
+
+`R U R' U'`
+
+Facelets:
+
+`UULUUFUUFRRUBRRURRFFDFFUFFFDDRDDDDDDBLLLLLLLLBRRBBBBBB`
+
+Canonical text:
+
+```
+SCGS-1-D02
+NODES
+CORNER_DIRECTION:00:2
+CORNER_DIRECTION:02:2
+CORNER_DIRECTION:04:2
+CORNER_HOME:00
+CORNER_HOME:02
+CORNER_HOME:03
+CORNER_HOME:04
+EDGE_HOME:00
+EDGE_HOME:03
+EDGE_HOME:08
+FINAL_CLOSURE
+EDGES
+CORNER_DIRECTION:00:2>CORNER_HOME:00
+CORNER_DIRECTION:00:2>FINAL_CLOSURE
+CORNER_DIRECTION:02:2>CORNER_HOME:02
+CORNER_DIRECTION:02:2>FINAL_CLOSURE
+CORNER_DIRECTION:04:2>CORNER_HOME:04
+CORNER_DIRECTION:04:2>FINAL_CLOSURE
+CORNER_HOME:00>FINAL_CLOSURE
+CORNER_HOME:02>FINAL_CLOSURE
+CORNER_HOME:03>FINAL_CLOSURE
+CORNER_HOME:04>FINAL_CLOSURE
+EDGE_HOME:00>FINAL_CLOSURE
+EDGE_HOME:03>FINAL_CLOSURE
+EDGE_HOME:08>FINAL_CLOSURE
+COUPLINGS
+CORNER_CYCLE:00-04
+CORNER_CYCLE:02-03
+EDGE_CYCLE:00-08-03
+```
+
+Canonical byte length:
+
+`686`
+
+SHA-256:
+
+`dc12d1562801884a15e28e00ba227c46c48b6ff538bd50373dd960b0bec794c7`
+
+This vector fixes:
+
+- multiple disjoint corner cycles;
+- an edge 3-cycle;
+- corner direction values keyed by piece identity;
+- exact final-closure fan construction;
+- complete byte-level publication rather than coupling subsets only.
+
+
+13.5 T4 - Seeded Scramble
+
+Generator:
+
+`Core generateScramble(12, seed=1), xorshift32`
+
+Algorithm:
+
+`U D R U' L' F2 U L U2 D2 R2 U'`
+
+Facelets:
+
+`FDBUUFLFFLLRBRBDLUFRUDFUURRLDFBDULURURDLLLBRBDFRDBBBFD`
+
+Canonical text:
+
+```
+SCGS-1-D02
+NODES
+CORNER_DIRECTION:00:1
+CORNER_DIRECTION:01:2
+CORNER_DIRECTION:02:2
+CORNER_DIRECTION:03:1
+CORNER_DIRECTION:04:2
+CORNER_DIRECTION:05:2
+CORNER_DIRECTION:06:1
+CORNER_DIRECTION:07:1
+CORNER_HOME:00
+CORNER_HOME:01
+CORNER_HOME:02
+CORNER_HOME:03
+CORNER_HOME:05
+CORNER_HOME:07
+EDGE_HOME:00
+EDGE_HOME:01
+EDGE_HOME:02
+EDGE_HOME:03
+EDGE_HOME:04
+EDGE_HOME:05
+EDGE_HOME:06
+EDGE_HOME:07
+EDGE_HOME:08
+EDGE_HOME:09
+EDGE_HOME:11
+FINAL_CLOSURE
+EDGES
+CORNER_DIRECTION:00:1>CORNER_HOME:00
+CORNER_DIRECTION:00:1>FINAL_CLOSURE
+CORNER_DIRECTION:01:2>CORNER_HOME:01
+CORNER_DIRECTION:01:2>FINAL_CLOSURE
+CORNER_DIRECTION:02:2>CORNER_HOME:02
+CORNER_DIRECTION:02:2>FINAL_CLOSURE
+CORNER_DIRECTION:03:1>CORNER_HOME:03
+CORNER_DIRECTION:03:1>FINAL_CLOSURE
+CORNER_DIRECTION:04:2>FINAL_CLOSURE
+CORNER_DIRECTION:05:2>CORNER_HOME:05
+CORNER_DIRECTION:05:2>FINAL_CLOSURE
+CORNER_DIRECTION:06:1>FINAL_CLOSURE
+CORNER_DIRECTION:07:1>CORNER_HOME:07
+CORNER_DIRECTION:07:1>FINAL_CLOSURE
+CORNER_HOME:00>FINAL_CLOSURE
+CORNER_HOME:01>FINAL_CLOSURE
+CORNER_HOME:02>FINAL_CLOSURE
+CORNER_HOME:03>FINAL_CLOSURE
+CORNER_HOME:05>FINAL_CLOSURE
+CORNER_HOME:07>FINAL_CLOSURE
+EDGE_HOME:00>FINAL_CLOSURE
+EDGE_HOME:01>FINAL_CLOSURE
+EDGE_HOME:02>FINAL_CLOSURE
+EDGE_HOME:03>FINAL_CLOSURE
+EDGE_HOME:04>FINAL_CLOSURE
+EDGE_HOME:05>FINAL_CLOSURE
+EDGE_HOME:06>FINAL_CLOSURE
+EDGE_HOME:07>FINAL_CLOSURE
+EDGE_HOME:08>FINAL_CLOSURE
+EDGE_HOME:09>FINAL_CLOSURE
+EDGE_HOME:11>FINAL_CLOSURE
+COUPLINGS
+CORNER_CYCLE:00-01-05-02
+CORNER_CYCLE:03-07
+EDGE_CYCLE:00-09-06-11-07-01-08-03-05-04-02
+```
+
+Canonical byte length:
+
+`1525`
+
+SHA-256:
+
+`bf7ce6fe41277651c6623256b277b72503510cb14dea38a685212c209c87c22f`
+
+This vector fixes:
+
+- an 11-member edge cycle;
+- multiple corner cycles;
+- two-digit indices inside dense records;
+- home-but-twisted corner obligations;
+- dense final-closure dependencies;
+- complete canonical publication for differential byte testing.
+
+
+14 Negative Conformance Vectors
+
+14.1 General Rule
+
+For every negative vector:
+
+`refusal -> no canonical graph text -> no graph_hash`
+
+The exact first refusal code MUST match.
+
+14.2 N1 - Wrong Length
+
+Facelets:
+
+`UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBB`
+
+Expected code:
+
+`FACELET_LENGTH`
+
+Expected state:
+
+`INCOMPLETE`
+
+14.3 N2 - Unknown Colour
+
+Facelets:
+
+`XUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`UNKNOWN_COLOUR`
+
+Expected state:
+
+`CONFLICT`
+
+14.4 N3 - Wrong Colour Count
+
+Facelets:
+
+`RUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`COLOUR_COUNT`
+
+Expected state:
+
+`CONFLICT`
+
+14.5 N4 - Non-Canonical Centres
+
+Facelets:
+
+`UUUURUUUURRRRURRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`CENTRE_ORIENTATION`
+
+Expected state:
+
+`CONFLICT`
+
+14.6 N5 - Single Flipped Edge
+
+Facelets:
+
+`UUUUURUUURURRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`EDGE_FLIP_PARITY`
+
+Expected state:
+
+`FORBIDDEN_STATE`
+
+14.7 N6 - Single Twisted Corner
+
+Facelets:
+
+`UUUUUUUUFURRRRRRRRFFRFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`CORNER_TWIST_PARITY`
+
+Expected state:
+
+`FORBIDDEN_STATE`
+
+14.8 N7 - Edge-Only Swap
+
+Facelets:
+
+`UUUUUUUUURFRRRRRRRFRFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`PERMUTATION_PARITY`
+
+Expected state:
+
+`FORBIDDEN_STATE`
+
+14.9 N8 - Duplicate Edge
+
+Facelets:
+
+`UUUUUUUUURRRFRRRRRFRFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`DUPLICATE_EDGE`
+
+Expected state:
+
+`CONFLICT`
+
+14.10 N9 - Duplicate Corner
+
+Facelets:
+
+`UUUUUUUUURRRRRRFRRRFFFFFFFLDDDDDDDDDLLFLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`DUPLICATE_CORNER`
+
+Expected state:
+
+`CONFLICT`
+
+14.11 N10 - Unknown Corner
+
+Facelets:
+
+`UUUUUUUUUDRRRRRRRRFFFFFFFFFDDRDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`UNKNOWN_CORNER`
+
+Expected state:
+
+`CONFLICT`
+
+14.12 N11 - Unknown Edge
+
+Facelets:
+
+`UUUUUUURURURRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`UNKNOWN_EDGE`
+
+Expected state:
+
+`CONFLICT`
+
+
+14.13 N12 - Corner Orientation Missing
+
+Facelets:
+
+`UUUUUUUURRURRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB`
+
+Expected code:
+
+`CORNER_ORIENTATION_MISSING`
+
+Expected state:
+
+`CONFLICT`
+
+This vector has valid length, alphabet, colour counts, and canonical centres. Corner position 00 contains no U or D facelet under the normative corner table.
+
+The refusal law applies:
+
+`canonical text = ABSENT`
+
+`graph hash = ABSENT`
+
+
+15 Metamorphic Conformance Requirements
+
+15.1 Repeated Serialization
+
+For every legal canonical state C and any two conforming serialization runs a and b:
+
+`serialize_a(C) = serialize_b(C)`
+
+across repeated runs, processes, machines, and supported languages.
+
+15.2 Insertion-Order Independence
+
+For every graph G:
+
+`serialize(records inserted in order A) = serialize(records inserted in order B)`
+
+for every insertion order A and B.
+
+15.3 Parse and Reserialize
+
+A conforming parser and serializer MUST satisfy:
+
+`serialize(parse(canonical_bytes)) = canonical_bytes`
+
+A conforming parser MUST reject rather than silently normalize:
+
+- CRLF input;
+- missing final LF;
+- extra blank lines;
+- a byte-order mark;
+- non-ASCII bytes;
+- missing, repeated, or reordered section headers;
+- duplicate records;
+- unsorted records;
+- malformed identifiers;
+- records in the wrong section;
+- out-of-range indices.
+
+Converting malformed records directly into sets and thereby removing duplicates is not conformant parsing.
+
+15.4 Graph Reconstruction from JSON
+
+For the optional JSON profile:
+
+`serialize(graph_from_json) = canonical_text`
+
+and:
+
+`SHA256(serialize(graph_from_json)) = graph_hash`
+
+15.5 Browser and Python Differential Identity
+
+For every committed positive vector:
+
+`browser_bytes = python_bytes`
+
+and:
+
+`browser_graph_hash = python_graph_hash`
+
+For every committed negative vector:
+
+`browser_refusal = python_refusal`
+
+The Python implementation SHOULD use only the standard library and SHOULD be written from this specification rather than produced as a line-by-line translation of the browser source.
+
+The Version 0.2.5 vector expectations are reproducible by the browser implementation and a standard-library Python reference serializer. 
+
+A general differential-conformance claim additionally requires publication of both implementations, their source hashes, and the vector provenance manifest.
+
+15.6 Upstream Orientation Canonicalization
+
+This is an integration requirement for the canonicalization layer.
+
+For every whole-cube rotation r:
+
+`canonicalize(r(C)) = canonicalize(C)`
+
+Therefore:
+
+`SCGS(canonicalize(r(C))) = SCGS(canonicalize(C))`
+
+SCGS itself MUST refuse a non-canonical centre signature.
+
+15.7 Move and Inverse Integration
+
+For every supported legal algorithm A:
+
+`apply(A); apply(inverse(A)) -> original canonical state`
+
+and therefore:
+
+`graph_hash_after_inverse = original graph_hash`
+
+15.8 Structural Route Isolation
+
+For one legal canonical state, the following modes MUST produce identical SCGS canonical text and graph hash when each mode invokes a conforming SCGS serializer:
+
+- direct graph serialization;
+- measurement-shadow-enabled execution;
+- measurement-shadow-disabled execution;
+- Stage 4.2 shadow resolution at the same state;
+- Stage 4.2E primary resolution at the same state;
+- Stage 4.2F corpus execution at the same state;
+- Stage 4.3 certificate production at the same state;
+- Stage 4.3 certificate verification followed by conforming SCGS serialization of the reconstructed state;
+- an independent SCGS implementation.
+
+A route verifier that reconstructs cube states but does not implement SCGS is not, by that fact alone, an independent SCGS serializer.
+
+The route mode may alter the next state by executing a legal action. It MUST NOT alter the graph bytes associated with any fixed state.
+
+The law is:
+
+`fixed canonical state + any conforming execution mode -> identical SCGS bytes`
+
+16 Conformance Corpus Extension
+
+Before the final `SCGS-1` tag is issued, the published corpus SHOULD include:
+
+- the solved state;
+- all single face quarter turns;
+- all single inverse face turns;
+- all single half turns;
+- one-move-from-solved states;
+- the superflip;
+- a pure corner 3-cycle;
+- a pure edge 3-cycle;
+- states with twisted corners home;
+- states with flipped edges home;
+- states with multiple disjoint cycles;
+- at least 100 committed seeded scrambles;
+- at least one dense 1,000-state corpus;
+- all negative classes in Section 14, including N12;
+- strict canonical-parser negative vectors;
+- all 24 whole-cube orientations as upstream canonicalization tests;
+- companion Stage 4.2 vectors covering solved rank, superflip rank, pure edge and corner 3-cycles, paired 2-cycles, flipped-edge residue, twisted-corner residue, parity bridge, compiler exact effect, and strict shadow trajectories;
+- companion Stage 4.3 vectors covering portable certificate roots, action chains, aggregate manifests, bundle roots, malformed certificates, tampered actions, tampered roots, and independent replay refusal.
+
+Every committed corpus record SHOULD publish:
+
+- vector_id;
+- generator_version;
+- seed where applicable;
+- algorithm;
+- raw facelets;
+- canonical facelets;
+- expected refusal or graph hash;
+- canonical text file;
+- implementation source hashes;
+- review status.
+
+
+17 Independent Implementation Requirements
+
+17.1 Independence Boundary
+
+Two implementations are not independent merely because they are written in different languages.
+
+A conformance report SHOULD record:
+
+- implementation identifier;
+- language;
+- source hash;
+- author or implementation origin;
+- specification version;
+- whether expected outputs were copied from another implementation;
+- whether canonical text was independently inspected.
+
+17.2 Dual-Origin Vectors
+
+The corpus SHOULD contain:
+
+- manually derived trivial vectors;
+- vectors first generated by the browser;
+- vectors first generated by the Python implementation;
+- adversarial vectors designed from the specification;
+- independently reviewed canonical texts.
+
+17.3 No Sole Oracle
+
+Neither the browser implementation nor the Python implementation is the sole normative oracle.
+
+The specification and committed canonical bytes are the authority.
+
+
+17.4 Vector Provenance Manifest
+
+Before a general differential-conformance claim is made, the published vector manifest MUST record for every vector:
+
+- vector identifier;
+- source state or construction method;
+- first generating implementation, if any;
+- independent reproducing implementation;
+- expected canonical-text file hash;
+- expected graph hash or refusal;
+- manual review status;
+- specification revision.
+
+A vector copied from one implementation into another is useful for regression testing, but it does not by itself establish independent differential conformance.
+
+
+
+18 Versioning
+
+18.1 Version Tags
+
+The current canonical domain tag is:
+
+`SCGS-1-D02`
+
+The document version is:
+
+`0.2.5`
+
+The canonical domain tag is part of the graph hash preimage.
+
+The document version is not inserted into the canonical graph text unless the domain tag itself changes.
+
+18.2 Candidate Tags
+
+A later candidate canon MUST use a distinct domain tag when canonical bytes may differ.
+
+Examples:
+
+`SCGS-1-C01`
+
+`SCGS-2-C01`
+
+Candidate tags MUST NOT be presented as byte-compatible with SCGS-1-D02 unless every canonical vector remains identical.
+
+18.3 Stable Tags
+
+A stable canon may use:
+
+`SCGS-1`
+
+only after:
+
+- positive and negative vectors are complete;
+- at least two independent serializers agree byte for byte;
+- parser-negative and metamorphic suites pass;
+- refusal precedence is fixed;
+- migration consequences are documented.
+
+18.4 Breaking Changes
+
+A change is breaking when it alters:
+
+- accepted input domain;
+- refusal precedence;
+- identifier spelling;
+- record inclusion;
+- record order;
+- section order;
+- line ending;
+- encoding;
+- canonical bytes;
+- graph hash.
+
+A breaking change requires a new domain tag.
+
+18.5 Future Graph Versions
+
+A future graph canon may add:
+
+- occupancy records;
+- protected structures;
+- temporary structures;
+- action-readiness relations;
+- Return Vow records;
+- policy-bound relations.
+
+Such additions require a new graph domain.
+
+They MUST NOT silently enter SCGS-1-D02 bytes.
+
+
+19 Canon Family Direction
+
+SCGS should remain small.
+
+Recommended companion canons are:
+
+```
+canon         purpose
+SCSTATE-1     exact canonical cube state
+SCGS-1        base observed obligation graph
+SCOP-1        occupancy projection and cycle-unit evidence
+SCRANK-1      structural progress rank
+SCKERNEL-1    pure-kernel effect contracts and target rules
+SCKCOMP-1     constructive kernel realization certificate
+SCSHADOW-1    strict-descent structural shadow route
+SCPRIMARY-1   primary certified structural route
+SCGD-1        canonical graph delta
+SCWIT-1       graph-node witness records
+SCPR-1        protected projection and Return Vow
+SCCAND-1      canonical candidate set
+SCACT-1       admitted action contract
+SCCERT-1      complete route certificate
+SCBENCH-1     committed benchmark result
+```
+
+Each canon SHOULD use:
+
+- a versioned domain tag;
+- ASCII grammar;
+- byte-wise ordering;
+- LF-terminated canonical text;
+- SHA-256;
+- positive vectors;
+- negative vectors;
+- differential implementation evidence.
+
+
+20 Canonical Graph Delta Direction
+
+A future SCGD-1 specification may represent:
+
+`DeltaG_i = G_(i+1) - G_i`
+
+Recommended sections are:
+
+```
+SCGD-1
+NODES_ADDED
+NODES_REMOVED
+EDGES_ADDED
+EDGES_REMOVED
+COUPLINGS_ADDED
+COUPLINGS_REMOVED
+```
+
+The graph-delta law is:
+
+`learning claim -> canonical graph-delta witness`
+
+This permits a Strategy or Plan to identify the exact structural relation added or removed by an action.
+
+
+21 Capability Boundary
+
+Graph capability levels may be described as:
+
+`G0 = obligation presence`
+
+`G1 = obligation values`
+
+`G2 = dependency and cycle structure`
+
+`G3 = protected and temporary structure`
+
+`G4 = action-ready structural graph`
+
+SCGS-1-D02 is:
+
+`G2 base observed graph`
+
+It includes orientation values, home relations, dependencies, and permutation cycles.
+
+It does not include dynamic occupancy records, protected structure, temporary structure, candidate readiness, or action authority.
+
+Permutation-cycle couplings expose mutually coupled placement components, but downstream policy and kernel capability determine whether a component is ready for action.
+
+
+22 Stage 4.2 and Stage 4.3 Integration Boundary
+
+22.1 Structural-Rank Input
+
+A Stage 4.2 rank implementation may consume only a legal canonical state or the exact cubie arrays extracted from that state.
+
+The house convention is:
+
+`C = (P_e, O_e, P_c, O_c)`
+
+`perm[position] = piece identity currently occupying that position`
+
+`ori[position] = orientation value of the occupying piece`
+
+The Stage 4.2 rank is not reconstructed from SCGS node counts alone because SCGS intentionally omits some state detail and summary fields.
+
+`SCGS graph -> insufficient as sole rank preimage`
+
+`canonical cube state -> sufficient rank preimage`
+
+22.2 Rank and Graph Independence
+
+SCGS records observed direction, home, prerequisite, and cycle-coupling facts. `SCRANK-1` records a progress potential. They answer different questions.
+
+`SCGS-1 question = what structural obligations and couplings are observed?`
+
+`SCRANK-1 question = what declared well-founded progress value does the state carry?`
+
+A change to the rank formula MUST NOT silently change SCGS bytes. A change to SCGS graph semantics MUST NOT silently reuse an existing rank profile identifier.
+
+22.3 Kernel and Compiler Independence
+
+Pure kernels such as `EF`, `CT`, `E3`, `C3`, and `PB` are action contracts, not graph record kinds under SCGS-1-D02.
+
+The integration order is:
+
+`canonical state -> SCGS graph evidence`
+
+and separately:
+
+`canonical state -> rank -> kernel target -> compiler -> exact-effect verification`
+
+The results may be linked by a higher-level route certificate, but their hash domains remain separate.
+
+22.4 Structural Route Isolation
+
+A reference-free structural shadow or primary route may rebuild SCGS after each completed action. It MUST reproduce the same SCGS bytes that any conforming serializer would produce for the same intermediate state.
+
+Stage 4.2E primary authority does not change graph semantics.
+
+`primary_route_authority -/-> graph_canon`
+
+The route may be generated by the historical mixed resolver, a pure-kernel shadow, the primary certified resolver, a human, or an independent verifier. Route origin does not alter graph canon.
+
+Primary-route refusal, fallback activation, rank descent, compiler search, and lesson text remain outside the SCGS hash preimage.
+
+22.5 Stage 4.3 Certificate and Aggregate Identity Separation
+
+Stage 4.3 portable certificates may carry SCGS graph hashes as separately labelled evidence fields.
+
+The certificate MUST preserve domain separation:
+
+`graph_hash = SHA256(SCGS canonical graph bytes)`
+
+`certificate_root = SHA256(SCCERT canonical certificate preimage)`
+
+`certificate_aggregate_root = SHA256(SCCERT corpus-manifest canonical text)`
+
+`portable_bundle_root = SHA256(SCCERT canonical bundle preimage)`
+
+These values identify different objects.
+
+Therefore:
+
+`graph_hash != certificate_root label`
+
+`graph_hash != certificate_aggregate_root label`
+
+`graph_hash != portable_bundle_root label`
+
+A protocol-defined portable bundle root MAY differ from the ordinary SHA-256 of a pretty-printed JSON file because the two hashes have different declared preimages.
+
+The Structural Cube v1.0.2 SCCERT economy corpus and its independent Python verifier do not change SCGS graph construction, graph ordering, graph text, or graph hashes.
+
+`certificate production or verification -/-> graph canon`
+
+The independent route verifier establishes route, state, rank, kernel, chain, and certificate integrity under its declared profiles. SCGS differential conformance remains a separate test requiring a conforming SCGS implementation.
+
+
+22.6 Structural Cube v1.0.2 Graph-Authority Boundary
+
+Structural Cube v1.0.2 uses the SCGS-1-D02 relation families inside the declared full-graph selector.
+
+The graph-governed route law is:
+
+`canonical state -> SCGS graph -> admitted pure-kernel pool -> graph ranking -> economy selection`
+
+SCGS-1-D02 governs only the canonical graph bytes.
+
+It does not govern:
+
+- structural-rank arithmetic;
+- pure-kernel target construction;
+- realization-catalogue identity;
+- economy lookahead;
+- action-chain serialization;
+- certificate serialization;
+- aggregate-manifest serialization;
+- bundle serialization.
+
+The graph-ablation evidence may remove declared relation families from a selector view.
+
+Such an ablation view MUST NOT be described as a different SCGS serialization of the same state.
+
+The distinction is:
+
+`SCGS canonical graph = fixed graph evidence`
+
+`ablation view = declared selector projection derived from that evidence`
+
+Ablation results MUST NOT alter the canonical graph hash.
+
+
+22.7 SCCERT-1-D02 Companion Identity
+
+The Structural Cube v1.0.2 certificate profile is:
+
+`SCCERT-1-D02-EXP-A`
+
+The certificate corpus profile is:
+
+`SCCERT-ECONOMY-CORPUS-1-D01-EXP-A`
+
+The current companion roots are:
+
+`realization_catalog_root = e4171e3dbfe128041ac8498b97d5729764de9a52b23e58135f14676431d66ac4`
+
+`certificate_aggregate_root = d4487b83847f17d89e433d6bde768a7000602f918857f1b3040f8f47bc2bc472`
+
+`certificate_bundle_root = c9433aa2070d3a0f23b2df78b386c7e425dcb2382455befb72494793d6ca62a7`
+
+These values are evidence identities for the declared v1.0.2 package.
+
+They are not SCGS graph hashes.
+
+The domain law is:
+
+`SCGS graph hash != realization catalogue root != certificate root != aggregate root != bundle root`
+
+The independent Python verifier may reconstruct the SCGS graph required by the declared route policy.
+
+That fact does not by itself make the verifier a general independent SCGS serializer.
+
+A separate SCGS conformance claim requires:
+
+- exact T1-T4 byte identity;
+- exact N1-N12 refusal identity;
+- parser-negative checks;
+- metamorphic checks;
+- explicit serializer profile identity.
+
+
+22.8 Version Manifest and Report Separation
+
+Structural Cube v1.0.2 also defines:
+
+`version_manifest_root = 74a6b3f92de7fe8e9d42ea5ee05ba7e54908ff2cdcbfcec31c3312f6d8e64ea2`
+
+`version_report_root = eb911576bbfbb7dd8ce6f9293ba81f361bce112f30450ead9d7c69ea0fc69225`
+
+These roots bind distribution artifacts and verification summaries.
+
+They do not replace:
+
+- graph hash;
+- state hash;
+- rank hash;
+- compiler hash;
+- certificate root;
+- aggregate root;
+- bundle root.
+
+The complete separation law is:
+
+`state -> graph -> rank -> kernel -> compiler -> certificate -> aggregate -> bundle -> version evidence`
+
+Each arrow crosses a separately declared identity domain.
+
+
+23 Conformance Checklist
+
+SCGS-1-D02 conformance is evaluated at two levels.
+
+Serializer conformance requires satisfaction of the applicable serialization, validation, refusal, canonical-byte, identity-separation, and metamorphic requirements below.
+
+A general differential-conformance claim additionally requires the cross-implementation identity and vector-provenance requirements in Items 32 through 34.
+
+1. It accepts only canonical 54-character facelet strings.
+2. It enforces exact colour counts.
+3. It enforces the canonical centre signature.
+4. It applies the normative phase, position, and extraction-step refusal precedence.
+5. It reproduces `(ep, eo, cp, co)` under Section 5.
+6. It rejects illegal or unreachable states.
+7. It constructs exactly the nodes of Section 6.
+8. It encodes edge direction as `:1`.
+9. It encodes corner direction as `:1` or `:2`.
+10. It constructs direction-before-home edges with prerequisite-to-dependent meaning.
+11. It adds final closure only when base nodes exist.
+12. It constructs cycles using `position -> perm[position]`.
+13. Every cycle begins with its smallest member.
+14. Every cycle contains at least two members.
+15. Every identifier matches Section 7.
+16. Every edge index is in `00..11`.
+17. Every corner index is in `00..07`.
+18. Every record is byte-wise sorted within its section.
+19. The section order is fixed.
+20. The first line is exactly `SCGS-1-D02`.
+21. Every line ends with LF.
+22. CRLF does not appear.
+23. A byte-order mark does not appear.
+24. The final line ends with LF.
+25. `graph_hash` is lowercase SHA-256 of the exact canonical bytes.
+26. Legacy FNV values are labelled `legacy_fingerprint`.
+27. Legacy values are excluded from certificates and evidence chains.
+28. T1 through T4 reproduce exact canonical texts, byte lengths, and SHA-256 values.
+29. N1 through N12 reproduce the exact refusal codes and states.
+30. Strict canonical-parser negative tests pass.
+31. Metamorphic tests in Section 15 pass.
+32. Browser and Python positive-vector canonical bytes are identical.
+33. Browser and Python negative-vector refusal outcomes are identical.
+34. Vector provenance is recorded before a general differential-conformance claim is made.
+35. Stage 4.2 rank computation does not alter SCGS canonical text.
+36. Stage 4.2 kernel compilation does not alter SCGS canonical text for a fixed state.
+37. Measurement-shadow-enabled, measurement-shadow-disabled, Stage 4.2 shadow, Stage 4.2E primary, Stage 4.2F corpus, and Stage 4.3 certificate modes reproduce identical SCGS bytes for the same state when using a conforming serializer.
+38. Primary-route and SCCERT certificates remain outside the SCGS hash preimage.
+39. Aggregate certificate manifests and bundle roots remain outside the SCGS hash preimage.
+40. Primary authority, certificate production, and certificate verification do not alter graph construction or ordering.
+41. Independent route verification is not presented as SCGS differential conformance unless the verifier also implements this specification.
+
+
+24 Final Conformance Laws
+
+The primary law is:
+
+`same canonical facelets -> same canonical graph text -> same SHA-256`
+
+The refusal law is:
+
+`illegal or unreachable state -> no graph -> no graph hash`
+
+The byte law is:
+
+`semantic agreement without byte identity -> not yet conformant`
+
+The differential law is:
+
+`implementation A + implementation B + same vector -> B_A = B_B`
+
+The identity-boundary law is:
+
+`graph_hash != state-hash label`
+
+The refusal-precedence law is:
+
+`phase order -> ascending position order -> extraction-step order`
+
+The graph-scope law is:
+
+`SCGS-1 prerequisite graph != complete actionability graph`
+
+The Anti-Disguise integration law is:
+
+`measurement-shadow-enabled, measurement-shadow-disabled, Stage 4.2 shadow, or primary structural authority cannot change canonical graph bytes`
+
+The companion-canon law is:
+
+`SCGS graph hash, rank hash, kernel hash, compiler hash, route-certificate root, aggregate certificate root, and portable bundle root remain domain-separated`
+
+The future learning-evidence direction is:
+
+`canonical graph delta -> verified Strategy and Plan witness`
+
+This direction requires separately versioned graph-delta and witness profiles. It is not an SCGS-1-D02 conformance requirement.
+
+SCGS-1-D02 establishes the base independently reproducible graph-evidence language for Structural Cube while leaving rank, kernel, compiler, route, portable certificate, aggregate manifest, and verifier authority to separately versioned companion canons.
+

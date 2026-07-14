@@ -15,6 +15,8 @@
 ![Fallback](https://img.shields.io/badge/Fallback%20Activation-NONE-lightgrey)
 ![Shunyaya](https://img.shields.io/badge/Part%20of-Shunyaya%20Framework-gold)
 
+[![Structural Cube Verification](https://github.com/OMPSHUNYAYA/Structural-Cube/actions/workflows/structural-cube-verify.yml/badge.svg)](https://github.com/OMPSHUNYAYA/Structural-Cube/actions/workflows/structural-cube-verify.yml)
+
 ---
 
 **Can a cube be solved by reading its present structure rather than following a fixed layer order or accepting an opaque route first?**

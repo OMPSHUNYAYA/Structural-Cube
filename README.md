@@ -19,6 +19,12 @@
 
 ---
 
+## 🌐 **Live Demo**
+
+[**Launch Structural Cube**](https://ompshunyaya.github.io/Structural-Cube/demo/Structural_Cube_v1_0_2.html) — open directly in a modern browser. **No installation. No account. No external solver.**
+
+---
+
 **Can a cube be solved by reading its present structure rather than following a fixed layer order or accepting an opaque route first?**
 
 Structural Cube explores that question through an interactive browser application, a graph-governed structural resolver, strict action-boundary descent, portable route certificates, and independent verification.
@@ -60,7 +66,7 @@ The main application is:
 
 [`demo/Structural_Cube_v1_0_2.html`](demo/Structural_Cube_v1_0_2.html)
 
-Because the HTML file is approximately `6.1 MB`, GitHub may not display it in the ordinary file view. **Download the file and open it locally in a modern browser.** It may also be served through GitHub Pages or attached as a downloadable repository asset.
+Because the HTML file is approximately `6.1 MB`, GitHub may not display it in the ordinary file view. **Download the file and open it locally in a modern browser.** It is also available through the Live Demo link above and may be attached as a downloadable repository asset.
 
 No network connection is required during ordinary use.
 

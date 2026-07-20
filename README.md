@@ -607,20 +607,13 @@ Administrator rights are not required.
 
 # 📜 **License**
 
-See:
+See: [LICENSE](LICENSE)
 
-[LICENSE](LICENSE)
+The Structural Cube reference implementation and associated verification artifacts are free to use, copy, modify, test, study, and redistribute without a license fee, subject to the license terms stated in the repository.
 
-**Reference Implementation:**  
-Provided under an **Open Use License** for use, study, execution, verification, reproduction, modification, implementation, extension, and distribution.
+Documentation, architecture materials, specifications, diagrams, and explanatory content are subject to the separate terms stated in the LICENSE.
 
-**Architecture and Documentation:**  
-Licensed under `CC BY-NC 4.0`.
-
-Attribution is required for architecture and documentation.  
-Commercial use of architecture and documentation requires separate written permission.
-
-Review the license terms before copying, modifying, redistributing, embedding, or adapting the application, verifier, specifications, or evidence files.
+This repository does not claim recognition as a formal technical standard, security certification, production qualification, or third-party verification.
 
 ---
 
